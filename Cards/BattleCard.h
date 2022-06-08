@@ -1,13 +1,12 @@
-//
-// Created by Daniel_Meents on 07/04/2022.
-//
-#ifndef Card_H
-#define Card_H
-#include "../Player.h"
+
+#ifndef BattleCard_H
+#define BattleCard_H
+
+#include "Card.h"
 #include <iostream>
 using namespace std;
 
-class Card {
+class BattleCard:public Card {
 public:
     /*
      * C'tor of Card class
@@ -17,7 +16,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Card(const string name);
+    BattleCard(const string name,const int force,const int loot,const int hp);
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -26,24 +25,26 @@ public:
      * @return
      *      void
     */
-    virtual void applyEncounter(Player& player) const=0;
+    virtual void applyEncounter(Player& player) const;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    Card()=delete;
+    BattleCard()=delete;  
 
 
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
-    Card(const Card&) = default;
-    virtual ~Card();
-    Card& operator=(const Card& other) = default;
+    BattleCard(const BattleCard&) = default;
+    virtual ~BattleCard();
+    BattleCard& operator=(const BattleCard& other) = default;
 
 
 private:
-    string m_name;
+    int m_force;
+    int m_loot;
+    int m_hp;
 };
 
 #endif 

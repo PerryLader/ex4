@@ -2,7 +2,6 @@
 
 #include "Player.h"
 #include "utilities.h"
-#include <cstring>
 
 Player::Player(const char *playerName, const int maxHp, const int force)
 {
@@ -76,10 +75,7 @@ Player &Player::operator=(const Player &player)
 }
 // methods
 
-void Player::printInfo()
-{
-    printPlayerInfo(m_name, m_level, m_force, m_curHp, m_coins);
-}
+
 
 void Player::levelUp()
 {
