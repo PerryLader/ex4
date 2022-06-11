@@ -2,7 +2,7 @@
 #ifndef Goblin_H
 #define Goblin_H
 #include "BattleCard.h"
-#include "../Player.h"
+#include "../Player/Player.h"
 #include <iostream>
 using namespace std;
 
@@ -16,7 +16,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Goblin(const string name);
+    Goblin();
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -37,11 +37,8 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Goblin(const Goblin&) = default;
-    ~Goblin();
+    ~Goblin() override;
     Goblin& operator=(const Goblin& other) = default;
-
-
-private:
 };
 
 #endif 

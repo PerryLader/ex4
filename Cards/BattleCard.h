@@ -1,11 +1,21 @@
 
 #ifndef BattleCard_H
 #define BattleCard_H
-
 #include "Card.h"
 #include <iostream>
 using namespace std;
 
+const int GOBLIN_FORCE=6;
+const int GOBLIN_LOOT=2;
+const int GOBLIN_HP=10;
+
+const int DRAGON_FORCE=25;
+const int DRAGON_LOOT=1000;
+const int DRAGON_HP=-1;
+
+const int VAMPIRE_FORCE=10;
+const int VAMPIRE_LOOT=2;
+const int VAMPIRE_HP=10;
 class BattleCard:public Card {
 public:
     /*
@@ -16,7 +26,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    BattleCard(const string name,const int force,const int loot,const int hp);
+    BattleCard();
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -25,7 +35,7 @@ public:
      * @return
      *      void
     */
-    virtual void applyEncounter(Player& player) const;
+    virtual void applyEncounter(Player& player) const=0;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -41,10 +51,6 @@ public:
     BattleCard& operator=(const BattleCard& other) = default;
 
 
-private:
-    int m_force;
-    int m_loot;
-    int m_hp;
 };
 
 #endif 
