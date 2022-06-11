@@ -3,7 +3,6 @@
 //
 
 #include "utilities.h"
-
 using std::cout;
 using std::string;
 using std::ostream;

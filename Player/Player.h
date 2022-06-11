@@ -1,6 +1,9 @@
 #ifndef EX2_PLAYER_H
 #define EX2_PLAYER_H
 
+#include <iostream>
+using namespace std;
+
 const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_LVL = 1;
@@ -8,36 +11,39 @@ const int MAX_LVL = 10;
 
 class Player
 {
-    char *m_name;
-    int m_level;
-    int m_force;
-    int m_maxHp;
-    int m_curHp;
-    int m_coins;
-
 public:
     // constractors
     Player()=delete ;
-    Player(const char *playerName, const int maxHp = DEFAULT_HP, const int force = DEFAULT_FORCE);
+    Player(const string playerName, const int maxHp, const int force);
     Player(const Player &player);
 
     // distractor
-    ~Player();
+    virtual ~Player();
 
     // oprators
     Player &operator=(const Player &player);
 
     // methods
-    void printInfo();
+    virtual void printInfo() =0;
     void levelUp();
-    void heal(const int healSize);
+    void debuff(const int debuffSize);
+    virtual void heal(const int healSize);
     void damage(const int dmgSize);
-    int getAttackStrength();
+    virtual int getAttackStrength();
     int getLevel();
-    void addCoins(const int coinsSize);
+    int getCurrHp();
+    virtual void addCoins(const int coinsSize);
     void buff(const int buffSize);
     bool isKnockedOut();
     bool pay(const int coinsSize);
+
+    protected:
+    string m_name;
+    int m_level;
+    int m_force;
+    int m_maxHp;
+    int m_curHp;
+    int m_coins;
 };
 
 #endif

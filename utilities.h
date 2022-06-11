@@ -6,6 +6,7 @@
 #include <cstring>
 #include <sstream>
 #include <functional>
+#include "./Player/Player.h"
 
 // #include "Exception.h"------------------------------
 // #include "Players/Player.h"-----------------------------
