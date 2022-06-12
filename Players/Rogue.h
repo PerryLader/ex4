@@ -3,7 +3,8 @@
 #include "Player.h"
 
 class Rogue: public Player{
-    Rogue(const string playerName, const int maxHp = DEFAULT_HP, const int force = DEFAULT_FORCE);
+    public:
+    Rogue(const string playerName);
     ~Rogue() override;
     Rogue(const Rogue&) = default;
     void addCoins(const int coinsSize) override;

@@ -9,13 +9,14 @@ const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_LVL = 1;
 const int MAX_LVL = 10;
+const int DEFAULT_COINS = 10;
 
 class Player
 {
 public:
     // constractors
     Player()=delete ;
-    Player(const string playerName, const int maxHp, const int force);
+    Player(const string playerName);
     Player(const Player &player);
 
     // distractor

@@ -3,7 +3,7 @@
 //
 #ifndef Card_H
 #define Card_H
-#include "../Player/Player.h"
+#include "../Players/Player.h"
 #include <iostream>
 using namespace std;
 

@@ -1,6 +1,6 @@
 #include "Mage.h"
 
-Mage::Mage(const string playerName, const int maxHp = DEFAULT_HP, const int force = DEFAULT_FORCE) : Player(playerName, maxHp, force){};
+Mage::Mage(const string playerName) : Player(playerName){};
 
 void Mage::heal(const int healSize) {
         if (healSize > 0)

@@ -2,7 +2,6 @@
 #ifndef Goblin_H
 #define Goblin_H
 #include "BattleCard.h"
-#include "../Player/Player.h"
 #include <iostream>
 using namespace std;
 

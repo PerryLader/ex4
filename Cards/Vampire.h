@@ -2,7 +2,6 @@
 #ifndef Vampire_H
 #define Vampire_H
 #include "BattleCard.h"
-#include "../Player/Player.h"
 #include <iostream>
 using namespace std;
 

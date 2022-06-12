@@ -1,7 +1,7 @@
 #include "Rogue.h"
 
-Rogue::Rogue(const string playerName, const int maxHp = DEFAULT_HP, const int force = DEFAULT_FORCE) :
-Player(playerName, maxHp, force) {};
+Rogue::Rogue(const string playerName) :
+Player(playerName) {};
 
 void Rogue::addCoins(const int coinsSize){
         if (coinsSize > 0)

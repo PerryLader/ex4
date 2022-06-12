@@ -1,10 +1,28 @@
 #ifndef MTMCHKIN_H_
 #define MTMCHKIN_H_
 
-class Mtmchkin{
+#include <queue>
+#include "utilities.h"
+#include "./Cards/Card.h"
+#include "./Players/Rogue.h"
+#include "./Players/Mage.h"
+#include "./Players/Fighter.h"
+
+
+class Mtmchkin {
+const string ROGUE = "Rogue";
+const string MAGE = "Mage";
+const string FIGHTER = "Fighter";
+
+std::queue<unique_ptr<Card>> Cards;
+std::queue<unique_ptr<Player>> Players;
+int m_teamSize;
+
+//helper methods
+void getInputTeamSize();
+void getInputPlayers();
 
 public:
-    
     /*
     * C'tor of Mtmchkin class
     *
@@ -37,8 +55,7 @@ public:
     *          True if the game ended
     *          False otherwise
     */
-    bool isGameOver() const;
-    
+    bool isGameOver() const;    
 	/*
     *  Returns the number of rounds played.
     *

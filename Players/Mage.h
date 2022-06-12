@@ -7,7 +7,7 @@ using namespace std;
 
 class Mage: public Player {
 public:
-Mage(const string playerName, const int maxHp = DEFAULT_HP, const int force = DEFAULT_FORCE);
+Mage(const string playerName);
 ~Mage() override;
 Mage(const Mage&) = default;
 void heal(const int healSize) override;
