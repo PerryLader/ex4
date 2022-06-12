@@ -3,9 +3,15 @@
 //
 #ifndef Card_H
 #define Card_H
-#include "../Player.h"
+#include "../Players/Player.h"
 #include <iostream>
 using namespace std;
+
+const string GOBLIN="Goblin";
+const string DRAGON="Dragon";
+const string VAMPIRE="Vampire";
+
+
 
 class Card {
 public:
@@ -17,7 +23,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Card(const string name);
+    Card();
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -42,8 +48,6 @@ public:
     Card& operator=(const Card& other) = default;
 
 
-private:
-    string m_name;
 };
 
 #endif 

@@ -1,18 +1,19 @@
 #include "Goblin.h"
 
-Goblin::Goblin(const string name):
- BattleCard(name,6,2,10)
+
+Goblin::Goblin():
+ BattleCard()
 {}
 
  void BattleCard::applyEncounter(Player &player) const 
  {
-    if(player.getAttackStrength()>=m_force)
+    if(player.getAttackStrength()>=GOBLIN_FORCE)
     {
-        player.addCoins(m_loot);
+        player.addCoins(GOBLIN_LOOT);
         player.levelUp();
     }
     else
     {
-        player.damage(m_hp);
+        player.damage(GOBLIN_HP);
     }
 }

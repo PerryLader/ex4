@@ -1,22 +1,11 @@
 
-#ifndef BattleCard_H
-#define BattleCard_H
-#include "Card.h"
+#ifndef Vampire_H
+#define Vampire_H
+#include "BattleCard.h"
 #include <iostream>
 using namespace std;
 
-const int GOBLIN_FORCE=6;
-const int GOBLIN_LOOT=2;
-const int GOBLIN_HP=10;
-
-const int DRAGON_FORCE=25;
-const int DRAGON_LOOT=1000;
-const int DRAGON_HP=-1;
-
-const int VAMPIRE_FORCE=10;
-const int VAMPIRE_LOOT=2;
-const int VAMPIRE_HP=10;
-class BattleCard:public Card {
+class Vampire:public BattleCard {
 public:
     /*
      * C'tor of Card class
@@ -26,7 +15,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    BattleCard();
+    Vampire();
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -35,22 +24,20 @@ public:
      * @return
      *      void
     */
-    virtual void applyEncounter(Player& player) const=0;
+    void applyEncounter(Player& player) const override;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    BattleCard()=delete;  
+    Vampire()=delete; 
 
 
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
-    BattleCard(const BattleCard&) = default;
-    virtual ~BattleCard();
-    BattleCard& operator=(const BattleCard& other) = default;
-
-
+    Vampire(const Vampire&) = default;
+    ~Vampire() override;
+    Vampire& operator=(const Vampire& other) = default;
 };
 
 #endif 
