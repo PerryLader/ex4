@@ -9,3 +9,6 @@ void Rogue::addCoins(const int coinsSize){
         m_coins += coinsSize*2;
     }
 }
+void Rogue::printInfo(ostream& os) const {
+    printPlayerDetails(os, m_name, "Rogue",m_level,m_force,m_curHp,m_coins);
+}

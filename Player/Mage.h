@@ -11,6 +11,7 @@ Mage(const string playerName, const int maxHp = DEFAULT_HP, const int force = DE
 ~Mage() override;
 Mage(const Mage&) = default;
 void heal(const int healSize) override;
+void printInfo(ostream& stream) const override;
 
 };
 

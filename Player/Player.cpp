@@ -52,6 +52,10 @@ Player &Player::operator=(const Player &player)
 // methods
 
 
+ostream& operator<<(ostream& os, const Player& player){
+    player.printInfo(os);
+    return os;
+}
 
 void Player::levelUp()
 {

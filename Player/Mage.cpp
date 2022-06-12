@@ -12,3 +12,7 @@ void Mage::heal(const int healSize) {
         }
     }
 }
+
+void Mage::printInfo(ostream& stream) const {
+    printPlayerDetails(stream,m_name,"Mage",m_level,m_force,m_curHp,m_coins);
+}

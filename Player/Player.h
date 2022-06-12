@@ -2,6 +2,7 @@
 #define EX2_PLAYER_H
 
 #include <iostream>
+#include "../utilities.h"
 using namespace std;
 
 const int DEFAULT_HP = 100;
@@ -24,7 +25,7 @@ public:
     Player &operator=(const Player &player);
 
     // methods
-    virtual void printInfo() =0;
+    virtual void printInfo(ostream& os) const = 0;
     void levelUp();
     void debuff(const int debuffSize);
     virtual void heal(const int healSize);
@@ -36,7 +37,7 @@ public:
     void buff(const int buffSize);
     bool isKnockedOut();
     bool pay(const int coinsSize);
-
+    friend ostream& operator<<(ostream& os, const Player& player);
     protected:
     string m_name;
     int m_level;
