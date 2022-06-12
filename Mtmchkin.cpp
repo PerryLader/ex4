@@ -1,12 +1,14 @@
 #include "Mtmchkin.h"
 #include <iostream>
-using namespace std;
-
+using std::string;
+using std::cin;
+using std::unique_ptr;
 // dosent know how to handle numbers bigger than the biggest int , check the option of unsigned int
 // dosent know how to handle cases that start with an int and end with char like "3a"
 
 void Mtmchkin::getInputTeamSize()
 {
+    
     printStartGameMessage();
     printEnterTeamSizeMessage();
     int teamSize = 0;
@@ -16,12 +18,12 @@ void Mtmchkin::getInputTeamSize()
         {
             printInvalidInput();
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         else
         {
             printInvalidTeamSize();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
     m_teamSize = teamSize;
@@ -49,7 +51,7 @@ void Mtmchkin::getInputPlayers()
             // else
             // {
             printInvalidClass();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             input = "";
             cin >> input;
             pos = input.find(" ");

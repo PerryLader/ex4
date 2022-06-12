@@ -1,6 +1,6 @@
 #include "Vampire.h"
 #include "../utilities.h"
-using namespace std;
+using std::string;
 
 Vampire::Vampire() : BattleCard()
 {

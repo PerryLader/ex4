@@ -1,5 +1,6 @@
 #include "Mage.h"
-
+using std::string;
+using std::ostream;
 Mage::Mage(const string playerName) : Player(playerName){};
 
 void Mage::heal(const int healSize) {

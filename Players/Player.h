@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include "../utilities.h"
-using namespace std;
-
+using std::ostream;
+//^^^^^^^^^^^^^האם זה תקין??
 const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_LVL = 1;

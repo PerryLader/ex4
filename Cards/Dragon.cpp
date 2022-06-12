@@ -1,6 +1,6 @@
 #include "Dragon.h"
 #include "../utilities.h"
-using namespace std;
+using std::string;
 
 
 Dragon::Dragon():

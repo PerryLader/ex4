@@ -1,6 +1,8 @@
 #include "Merchant.h"
 #include "../utilities.h"
-using namespace std;
+using std::string;
+using std::cin;
+using std::cout;
 
 Merchant::Merchant() : Card()
 {
@@ -17,7 +19,7 @@ void Merchant::applyEncounter(Player &player) const
     while (choosen.length() != 1 || choosen[0] < 48 || choosen[0] > 50)
     {
         printInvalidInput();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(cin, choosen);
     }
     int final = stoi(choosen);
@@ -31,15 +33,24 @@ void Merchant::applyEncounter(Player &player) const
         {
             printMerchantSummary(cout, player.getName(), 1, 5);
         }
+         else
+        {
+            printMerchantInsufficientCoins(cout);
+        }
         break;
     case 2:
         if (player.pay(10))
         {
             printMerchantSummary(cout, player.getName(), 2, 10);
         }
+        else
+        {
+            printMerchantInsufficientCoins(cout);
+        }
         break;
 
     default:
+    cout<<"fuck it";
         break;
     }
 }

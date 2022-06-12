@@ -3,7 +3,6 @@
 
 #include "Player.h"
 #include <iostream>
-using namespace std;
 
 class Mage: public Player {
 public:

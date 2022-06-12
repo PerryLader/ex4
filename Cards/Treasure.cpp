@@ -1,6 +1,6 @@
 #include "Treasure.h"
 #include "../utilities.h"
-using namespace std;
+using std::string;
 
 Treasure::Treasure() : Card()
 {

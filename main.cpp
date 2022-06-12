@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Mtmchkin.h"
 using std::string;
-
+using std::cin;
 int main(){
     printStartGameMessage();
     printEnterTeamSizeMessage();

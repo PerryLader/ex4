@@ -1,7 +1,6 @@
 #include "Goblin.h"
 #include "../utilities.h"
-
-using namespace std;
+using std::string;
 
 Goblin::Goblin():
  BattleCard()

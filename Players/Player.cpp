@@ -1,8 +1,8 @@
-#include <iostream>
-using namespace std;
 
 #include "Player.h"
 #include "utilities.h"
+using std::string;
+using std::ostream;
 
 Player::Player(const string playerName) : m_name(playerName),
                                           m_level(DEFAULT_LVL),
