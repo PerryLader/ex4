@@ -5,7 +5,7 @@
 #define Card_H
 #include "../Players/Player.h"
 #include <iostream>
-using namespace std;
+
 
 const string GOBLIN="Goblin";
 const string DRAGON="Dragon";

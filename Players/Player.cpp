@@ -60,6 +60,14 @@ int Player::getCurrHp()
 {
     return m_curHp;
 }
+string Player::getName()
+{
+    return m_name;
+}
+int Player::getMoney()
+{
+    return m_coins;
+}
 bool Player::isKnockedOut()
 {
 

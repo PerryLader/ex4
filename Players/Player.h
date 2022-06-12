@@ -34,6 +34,8 @@ public:
     virtual int getAttackStrength();
     int getLevel();
     int getCurrHp();
+    string getName();
+    int getMoney();
     virtual void addCoins(const int coinsSize);
     void buff(const int buffSize);
     bool isKnockedOut();

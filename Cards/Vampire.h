@@ -2,8 +2,7 @@
 #ifndef Vampire_H
 #define Vampire_H
 #include "BattleCard.h"
-#include <iostream>
-using namespace std;
+
 
 class Vampire:public BattleCard {
 public:

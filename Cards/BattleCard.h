@@ -2,8 +2,8 @@
 #ifndef BattleCard_H
 #define BattleCard_H
 #include "Card.h"
-#include <iostream>
-using namespace std;
+
+
 
 const int GOBLIN_FORCE=6;
 const int GOBLIN_LOOT=2;

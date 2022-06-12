@@ -1,19 +1,25 @@
 #include "Goblin.h"
+#include "../utilities.h"
 
+using namespace std;
 
 Goblin::Goblin():
  BattleCard()
 {}
 
- void BattleCard::applyEncounter(Player &player) const 
+ void Goblin::applyEncounter(Player &player) const 
  {
     if(player.getAttackStrength()>=GOBLIN_FORCE)
     {
         player.addCoins(GOBLIN_LOOT);
         player.levelUp();
+        printWinBattle(player.getName(),GOBLIN);
+
     }
     else
     {
         player.damage(GOBLIN_HP);
+        printLossBattle(player.getName(),GOBLIN);
+
     }
 }
