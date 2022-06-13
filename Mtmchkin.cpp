@@ -74,15 +74,19 @@ void Mtmchkin::getInputTeamSize()
     }
 }
 
-bool Mtmchkin::checkIfNameLegal(const string& name) {
-    if (name.length() > 15) {
+bool Mtmchkin::checkIfNameLegal(const string &name)
+{
+    if (name.length() > 15)
+    {
         printInvalidName();
         return false;
     }
     int currChar;
-    for (char i : name) {
+    for (char i : name)
+    {
         currChar = int(i);
-        if ((currChar > 122) || (currChar < 97 && currChar > 90) || (currChar < 65)) {
+        if ((currChar > 122) || (currChar < 97 && currChar > 90) || (currChar < 65))
+        {
             printInvalidName();
             return false;
         }
@@ -90,27 +94,47 @@ bool Mtmchkin::checkIfNameLegal(const string& name) {
     return true;
 }
 
-bool Mtmchkin::checkClassIsLegal(const string& job){
-    if (!(job == ROGUE || job == WIZARD || job == FIGHTER)) {
+bool Mtmchkin::checkClassIsLegal(const string &job)
+{
+    if (!(job == ROGUE || job == WIZARD || job == FIGHTER))
+    {
         printInvalidClass();
         return false;
     }
     return true;
 }
 
-void Mtmchkin::getInputPlayers() {
-    for (int i = 0; i < m_teamSize; i++) {
+void Mtmchkin::getInputPlayers()
+{
+    for (int i = 0; i < m_teamSize; i++)
+    {
         string input;
         std::getline(cin, input);
         int pos = input.find(" ");
         string name = input.substr(0, pos);
-        string job = input.substr(pos + 1, input.length());
+        string job;
+        if (pos < input.length())
+        {
+            job = input.substr(pos + 1, input.length());
+        }
+        else
+        {
+            job = UNDEFINED;
+        }
         bool illegal = !checkIfNameLegal(name) || !checkClassIsLegal(job);
-        while (illegal) {
+        while (illegal)
+        {
             std::getline(cin, input);
             pos = input.find(" ");
             name = input.substr(0, pos);
-            job = input.substr(pos + 1, input.length());
+            if (pos < input.length())
+            {
+                job = input.substr(pos + 1, input.length());
+            }
+            else
+            {
+                job = UNDEFINED;
+            }
             illegal = !checkIfNameLegal(name) || !checkClassIsLegal(job);
         }
         if (job == ROGUE)

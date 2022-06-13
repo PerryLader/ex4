@@ -13,6 +13,7 @@ class Mtmchkin {
 const string ROGUE = "Rogue";
 const string WIZARD = "Wizard";
 const string FIGHTER = "Fighter";
+const string UNDEFINED = "Undefined";
 
 std::queue<unique_ptr<Card>> m_cards;
 std::vector<unique_ptr<Player>> m_players;
