@@ -40,7 +40,7 @@ void Mtmchkin::getInputPlayers()
         string name = input.substr(0, pos);
         string job = input.substr(pos, input.length());
         // check name as well
-        while (!(job == ROGUE || job == MAGE || job == FIGHTER))
+        while (!(job == ROGUE || job == WIZARD || job == FIGHTER))
         {
             // if (cin.fail())
             // {
@@ -63,9 +63,9 @@ void Mtmchkin::getInputPlayers()
         {
             Players.push(unique_ptr<Player>(new Rogue(name)));
         }
-        if (job == MAGE)
+        if (job == WIZARD)
         {
-            Players.push(unique_ptr<Player>(new Mage(name)));
+            Players.push(unique_ptr<Player>(new Wizard(name)));
         }
         if (job == FIGHTER)
         {

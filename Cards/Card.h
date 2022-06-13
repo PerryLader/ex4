@@ -5,11 +5,17 @@
 #define Card_H
 #include "../Players/Player.h"
 #include <iostream>
+#include "../utilities.h"
 
 
-const string GOBLIN="Goblin";
-const string DRAGON="Dragon";
-const string VAMPIRE="Vampire";
+const std::string GOBLIN="Goblin";
+const std::string DRAGON="Dragon";
+const std::string VAMPIRE="Vampire";
+const std::string BARFIGHT="Barfight";
+const std::string FAIRY="Fairy";
+const std::string MERCHANT="Merchant";
+const std::string PITFALL="Pitfall";
+const std::string TREASURE="Treasure";
 
 
 
@@ -33,6 +39,7 @@ public:
      *      void
     */
     virtual void applyEncounter(Player& player) const=0;
+    virtual void PrintCard(const Card& card) const;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -43,6 +50,7 @@ public:
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
+
     Card(const Card&) = default;
     virtual ~Card();
     Card& operator=(const Card& other) = default;

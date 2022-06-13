@@ -19,7 +19,6 @@ Dragon::Dragon():
     else
     {
         player.damage(player.getCurrHp());
-        player.damage(DRAGON_HP);
         printLossBattle(player.getName(),DRAGON);
 
     }

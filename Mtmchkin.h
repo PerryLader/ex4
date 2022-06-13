@@ -5,13 +5,13 @@
 #include "utilities.h"
 #include "./Cards/Card.h"
 #include "./Players/Rogue.h"
-#include "./Players/Mage.h"
+#include "./Players/Wizard.h"
 #include "./Players/Fighter.h"
 
 
 class Mtmchkin {
 const string ROGUE = "Rogue";
-const string MAGE = "Mage";
+const string WIZARD = "Wizard";
 const string FIGHTER = "Fighter";
 
 std::queue<unique_ptr<Card>> Cards;
