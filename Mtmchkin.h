@@ -13,16 +13,20 @@ class Mtmchkin {
 const string ROGUE = "Rogue";
 const string WIZARD = "Wizard";
 const string FIGHTER = "Fighter";
+const string UNDEFINED = "Undefined";
 
 std::queue<unique_ptr<Card>> m_cards;
 std::vector<unique_ptr<Player>> m_players;
 std::vector<unique_ptr<Player>> m_leadboard;
+std::vector<bool> m_activePlayers;
 int m_teamSize;
 
 //helper methods
 void getInputTeamSize();
 void getInputPlayers();
-
+void updateLeaderBoard();
+bool checkClassIsLegal(const string& job);
+bool checkIfNameLegal(const string& name);
 public:
     /*
     * C'tor of Mtmchkin class
