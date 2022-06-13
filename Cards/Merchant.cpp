@@ -1,16 +1,16 @@
 #include "Merchant.h"
 #include "../utilities.h"
-using std::string;
 using std::cin;
 using std::cout;
+using std::string;
 
-Merchant::Merchant() : Card()
+Merchant::Merchant() : Card(MERCHANT)
 {
 }
 
 void Merchant::applyEncounter(Player &player) const
 {
-    
+
     // need to be cheked
     printMerchantInitialMessageForInteractiveEncounter(cout, player.getName(), player.getMoney());
 
@@ -22,35 +22,49 @@ void Merchant::applyEncounter(Player &player) const
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(cin, choosen);
     }
-    int final = stoi(choosen);
+    int final;
+    try
+    {
+        final = stoi(choosen);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     switch (final)
     {
-    case 0:
-        printMerchantSummary(cout, player.getName(), 0, 0);
+    case DONT_BUY:
+        printMerchantSummary(cout, player.getName(), DONT_BUY, DONT_BUY);
         break;
-    case 1:
-        if (player.pay(5))
+    case BUY_HEAL:
+        if (player.pay(PRICE_HEAL))
         {
-            printMerchantSummary(cout, player.getName(), 1, 5);
-        }
-         else
-        {
-            printMerchantInsufficientCoins(cout);
-        }
-        break;
-    case 2:
-        if (player.pay(10))
-        {
-            printMerchantSummary(cout, player.getName(), 2, 10);
+            player.heal(DEF_HEAL);
+        printMerchantSummary(cout, player.getName(), BUY_HEAL, PRICE_HEAL);
+
         }
         else
         {
             printMerchantInsufficientCoins(cout);
+            printMerchantSummary(cout, player.getName(), BUY_HEAL, DONT_BUY);
         }
         break;
+    case BUY_FORCE:
+        if (player.pay(PRICE_FORCE))
+        {
+            player.buff(DEF_BUFF);
+        printMerchantSummary(cout, player.getName(), BUY_FORCE, PRICE_FORCE);
 
+        }
+        else
+        {
+            printMerchantInsufficientCoins(cout);
+        printMerchantSummary(cout, player.getName(), BUY_FORCE, DONT_BUY);
+
+        }
+        break;
     default:
-    cout<<"fuck it";
+        cout << "fuck it";
         break;
     }
 }

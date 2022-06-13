@@ -2,7 +2,7 @@
 #include "../utilities.h"
 #include "../Players/Fighter.h"
 
-Barfight::Barfight() : Card()
+Barfight::Barfight() : Card(BARFIGHT)
 {
 }
 

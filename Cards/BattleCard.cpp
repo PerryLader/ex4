@@ -3,44 +3,25 @@
 #include "Vampire.h"
 #include "Goblin.h"
 
-BattleCard::BattleCard():
- Card()
-{}
-void Card::PrintCard(const Card& card) const 
+BattleCard::BattleCard(const std::string name) : Card(name)
 {
-    std::string name="check";
-    const Dragon *dragon = dynamic_cast<const Dragon *>(&card);
-    if (dragon != nullptr)
+}
+void Card::PrintCard(const Card &card) const
+{
+
+    printCardDetails(std::cout, m_name);
+    if (m_name == DRAGON)
     {
-        // player is a dragon
-        name=DRAGON;
-        printCardDetails(std::cout,name);
-        printMonsterDetails(std::cout,DRAGON_FORCE,DRAGON_HP,DRAGON_LOOT,true);
+        printMonsterDetails(std::cout, DRAGON_FORCE, DRAGON_HP, DRAGON_LOOT, true);
+    }
+    if (m_name == GOBLIN)
+    {
+        printMonsterDetails(std::cout, GOBLIN_FORCE, GOBLIN_HP, GOBLIN_LOOT, false);
+    }
+    if (m_name == VAMPIRE)
+    {
+        printMonsterDetails(std::cout, VAMPIRE_FORCE, VAMPIRE_HP, VAMPIRE_LOOT, false);
     }
 
-    const Vampire *vampire = dynamic_cast<const Vampire *>(&card);
-    if (vampire != nullptr)
-    {
-        // player is a vampire
-        name=VAMPIRE;
-        printCardDetails(std::cout,name);
-        printMonsterDetails(std::cout,VAMPIRE_FORCE,VAMPIRE_HP,VAMPIRE_LOOT,false);
-    }
-
-    const Goblin *goblin = dynamic_cast<const Goblin *>(&card);
-    if (goblin != nullptr)
-    {
-        // player is a goblin
-        name=GOBLIN;
-        printCardDetails(std::cout,name);
-        printMonsterDetails(std::cout,GOBLIN_FORCE,GOBLIN_HP,GOBLIN_LOOT,false);
-    }
-    
-    if(name=="check")
-    {
-        std::cout<<"errroorrr";
-    }
-    
     printEndOfCardDetails(std::cout);
-
 }

@@ -2,7 +2,7 @@
 #include "../utilities.h"
 using std::string;
 
-Vampire::Vampire() : BattleCard()
+Vampire::Vampire() : BattleCard(VAMPIRE)
 {
 }
 

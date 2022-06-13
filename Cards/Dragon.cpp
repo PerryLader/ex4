@@ -4,7 +4,7 @@ using std::string;
 
 
 Dragon::Dragon():
- BattleCard()
+ BattleCard(DRAGON)
 {}
 
  void Dragon::applyEncounter(Player &player) const 

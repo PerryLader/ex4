@@ -40,6 +40,7 @@ public:
     virtual void addCoins(const int coinsSize);
     void buff(const int buffSize);
     bool isKnockedOut();
+    bool isWinner();
     bool pay(const int coinsSize);
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
     protected:

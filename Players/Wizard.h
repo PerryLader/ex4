@@ -10,7 +10,7 @@ Wizard(const string playerName);
 ~Wizard() override;
 Wizard(const Wizard&) = default;
 void heal(const int healSize) override;
-void printInfo(ostream& stream) const override;
+void printInfo(std::ostream& stream) const override;
 
 };
 

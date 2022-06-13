@@ -16,11 +16,16 @@ const std::string FAIRY="Fairy";
 const std::string MERCHANT="Merchant";
 const std::string PITFALL="Pitfall";
 const std::string TREASURE="Treasure";
-
-
-
+const int DONT_BUY=0;
+const int BUY_HEAL=1;
+const int BUY_FORCE=2;
+const int PRICE_HEAL=5;
+const int PRICE_FORCE=10;
+const int DEF_BUFF=1;
+const int DEF_HEAL=1;
 class Card {
 public:
+
     /*
      * C'tor of Card class
      *
@@ -29,8 +34,11 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Card();
-    
+    Card(const std::string name);
+    const std::string getName()
+    {
+        return m_name;
+    }
     /*
      * Handling the player's applyEncounter with the card:
      *
@@ -55,7 +63,8 @@ public:
     virtual ~Card();
     Card& operator=(const Card& other) = default;
 
-
+protected:
+const std::string m_name;
 };
 
 #endif 

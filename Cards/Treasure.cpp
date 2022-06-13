@@ -2,7 +2,7 @@
 #include "../utilities.h"
 using std::string;
 
-Treasure::Treasure() : Card()
+Treasure::Treasure() : Card(TREASURE)
 {
 }
 

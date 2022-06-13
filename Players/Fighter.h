@@ -8,7 +8,7 @@ class Fighter : public Player {
     ~Fighter() override;
     Fighter(const Fighter&) = default;
     int getAttackStrength() override;
-    void printInfo(ostream& os) const override;
+    void printInfo(std::ostream& os) const override;
 };
 
 #endif

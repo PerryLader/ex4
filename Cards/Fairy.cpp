@@ -2,7 +2,7 @@
 #include "../utilities.h"
 #include "../Players/Wizard.h"
 
-Fairy::Fairy() : Card()
+Fairy::Fairy() : Card(FAIRY)
 {
 }
 

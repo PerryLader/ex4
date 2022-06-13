@@ -25,7 +25,7 @@ public:
      * @return
      *      A new instance of Card.
      */
-    BattleCard();
+    BattleCard(const std::string name);
 
     /*
      * Handling the player's applyEncounter with the card:

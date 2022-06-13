@@ -3,7 +3,7 @@
 using std::string;
 
 Goblin::Goblin():
- BattleCard()
+ BattleCard(GOBLIN)
 {}
 
  void Goblin::applyEncounter(Player &player) const 

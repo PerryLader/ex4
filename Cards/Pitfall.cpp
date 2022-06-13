@@ -2,7 +2,7 @@
 #include "../utilities.h"
 #include "../Players/Rogue.h"
 
-Pitfall::Pitfall() : Card()
+Pitfall::Pitfall() : Card(PITFALL)
 {
 }
 
