@@ -1,30 +1,43 @@
 #include "Mtmchkin.h"
 #include <iostream>
-using namespace std;
-
+using std::cin;
+using std::string;
+using std::unique_ptr;
 // dosent know how to handle numbers bigger than the biggest int , check the option of unsigned int
 // dosent know how to handle cases that start with an int and end with char like "3a"
+void Mtmchkin::playRound()
+{
+    for (int i = 0; i <m_teamSize; i++)
+    {
+        m_cards.front()->applyEncounter(*(m_players[i]));
+        unique_ptr<Card> temp;
+        temp. m_cards.front();
+        m_cards.push(m_cards.());
 
+    }
+}
 void Mtmchkin::getInputTeamSize()
 {
+
     printStartGameMessage();
     printEnterTeamSizeMessage();
-    int teamSize = 0;
-    while (cin >> teamSize && teamSize > 6 || teamSize < 2)
+    string choosen;
+    std::getline(cin, choosen);
+    while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54)
     {
-        if (cin.fail())
-        {
-            printInvalidInput();
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-        else
-        {
-            printInvalidTeamSize();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
+
+        printInvalidTeamSize();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getline(cin, choosen);
     }
-    m_teamSize = teamSize;
+    try
+    {
+        m_teamSize = stoi(choosen);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
 void Mtmchkin::getInputPlayers()
@@ -38,7 +51,7 @@ void Mtmchkin::getInputPlayers()
         string name = input.substr(0, pos);
         string job = input.substr(pos, input.length());
         // check name as well
-        while (!(job == ROGUE || job == MAGE || job == FIGHTER))
+        while (!(job == ROGUE || job == WIZARD || job == FIGHTER))
         {
             // if (cin.fail())
             // {
@@ -49,7 +62,7 @@ void Mtmchkin::getInputPlayers()
             // else
             // {
             printInvalidClass();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             input = "";
             cin >> input;
             pos = input.find(" ");
@@ -59,15 +72,15 @@ void Mtmchkin::getInputPlayers()
         }
         if (job == ROGUE)
         {
-            Players.push(unique_ptr<Player>(new Rogue(name)));
+            m_players[i] = (unique_ptr<Player>(new Rogue(name)));
         }
-        if (job == MAGE)
+        if (job == WIZARD)
         {
-            Players.push(unique_ptr<Player>(new Mage(name)));
+            m_players[i] = (unique_ptr<Player>(new Wizard(name)));
         }
         if (job == FIGHTER)
         {
-            Players.push(unique_ptr<Player>(new Fighter(name)));
+            m_players[i] = (unique_ptr<Player>(new Fighter(name)));
         }
     }
 }

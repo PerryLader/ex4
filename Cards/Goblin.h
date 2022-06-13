@@ -2,8 +2,6 @@
 #ifndef Goblin_H
 #define Goblin_H
 #include "BattleCard.h"
-#include <iostream>
-using namespace std;
 
 class Goblin:public BattleCard {
 public:

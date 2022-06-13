@@ -8,7 +8,7 @@ class Rogue: public Player{
     ~Rogue() override;
     Rogue(const Rogue&) = default;
     void addCoins(const int coinsSize) override;
-    void printInfo(ostream& os) const override;
+    void printInfo(std::ostream& os) const override;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "Fighter.h"
+using std::string;
 
 Fighter::Fighter(const string playerName) : Player(playerName){};
 

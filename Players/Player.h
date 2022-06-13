@@ -3,20 +3,21 @@
 
 #include <iostream>
 #include "../utilities.h"
-using namespace std;
-
 const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_LVL = 1;
 const int MAX_LVL = 10;
 const int DEFAULT_COINS = 10;
+const int DEFAULT_HP_FAIRY = 10;
+const int DEFAULT_DAMAGE_PITFALL = 10;
+const int DEFAULT_DAMAGE_BARFIGHT = 10;
 
 class Player
 {
 public:
     // constractors
     Player()=delete ;
-    Player(const string playerName);
+    Player(const std::string playerName);
     Player(const Player &player);
 
     // distractor
@@ -26,7 +27,7 @@ public:
     Player &operator=(const Player &player);
 
     // methods
-    virtual void printInfo(ostream& os) const = 0;
+    virtual void printInfo(std::ostream& os) const = 0;
     void levelUp();
     void debuff(const int debuffSize);
     virtual void heal(const int healSize);
@@ -34,13 +35,16 @@ public:
     virtual int getAttackStrength();
     int getLevel();
     int getCurrHp();
+    std::string getName();
+    int getMoney();
     virtual void addCoins(const int coinsSize);
     void buff(const int buffSize);
     bool isKnockedOut();
+    bool isWinner();
     bool pay(const int coinsSize);
-    friend ostream& operator<<(ostream& os, const Player& player);
+    friend std::ostream& operator<<(std::ostream& os, const Player& player);
     protected:
-    string m_name;
+    std::string m_name;
     int m_level;
     int m_force;
     int m_maxHp;
