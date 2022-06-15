@@ -15,38 +15,35 @@
 using std::cin;
 using std::ifstream;
 using std::string;
-using std::unique_ptr;
-bool Mtmchkin::validateEnoughCards()
+void Mtmchkin::validateEnoughCards()
 {
     if (m_cards.size() < MIN_DECK_CARDS)
     {
         throw DeckFileInvalidSize();
     }
 }
-void Mtmchkin::initDeckMap(std::map<string, unique_ptr<Card>> &deck)
+void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
 {
-    deck[GOBLIN] = unique_ptr<Card>(new Goblin());
-    deck[FAIRY] = unique_ptr<Card>(new Fairy());
-    deck[DRAGON] = unique_ptr<Card>(new Dragon());
-    deck[VAMPIRE] = unique_ptr<Card>(new Vampire());
-    deck[TREASURE] = unique_ptr<Card>(new Treasure());
-    deck[PITFALL] = unique_ptr<Card>(new Pitfall());
-    deck[MERCHANT] = unique_ptr<Card>(new Merchant());
-    deck[BARFIGHT] = unique_ptr<Card>(new Barfight());
+    deck[GOBLIN] = std::unique_ptr<Card>(new Goblin());
+    deck[FAIRY] = std::unique_ptr<Card>(new Fairy());
+    deck[DRAGON] = std::unique_ptr<Card>(new Dragon());
+    deck[VAMPIRE] = std::unique_ptr<Card>(new Vampire());
+    deck[TREASURE] = std::unique_ptr<Card>(new Treasure());
+    deck[PITFALL] = std::unique_ptr<Card>(new Pitfall());
+    deck[MERCHANT] = std::unique_ptr<Card>(new Merchant());
+    deck[BARFIGHT] = std::unique_ptr<Card>(new Barfight());
 }
 void Mtmchkin::insertCard(const string cardName, const int curr_row)
 {
-    std::map<string, unique_ptr<Card>> deck;
+    std::map<string, std::unique_ptr<Card>> deck;
     initDeckMap(deck);
     if (deck.find(cardName) == deck.end())
     {
-        // bad card name
-        // add throw
         throw DeckFileFormatError(curr_row);
     }
     else
     {
-        m_cards.push(deck[cardName]);
+        m_cards.push(std::move(deck[cardName]));
     }
 }
 Mtmchkin::Mtmchkin(const std::string fileName)
@@ -81,7 +78,7 @@ Mtmchkin::Mtmchkin(const std::string fileName)
     initLeaderBoard(m_leadboard);
     getInputPlayers();
 }
-void Mtmchkin::initLeaderBoard(std::vector<unique_ptr<Player>> &leaderBoard)
+void Mtmchkin::initLeaderBoard(std::vector<std::unique_ptr<Player>> &leaderBoard)
 {
     for (int i = 0; i < m_teamSize; i++)
     {
@@ -130,8 +127,8 @@ void Mtmchkin::playRound()
         {
             printTurnStartMessage(m_players[i]->getName());
             m_cards.front()->applyEncounter(*(m_players[i]));
-            unique_ptr<Card> temp = std::move(m_cards.front());
-            m_cards.push(temp);
+            std::unique_ptr<Card> temp = std::move(m_cards.front());
+            m_cards.push(std::move(temp));
             m_cards.pop();
         }
     }
@@ -190,7 +187,7 @@ void Mtmchkin::getInputTeamSize()
     while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54 || !cin.eof())
     {
         printInvalidTeamSize();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(cin, choosen);
     }
     try
@@ -244,7 +241,7 @@ void Mtmchkin::getInputPlayers()
         int pos = input.find(" ");
         string name = input.substr(0, pos);
         string job;
-        if (pos < input.length())
+        if ((unsigned int) pos < input.length())
         {
             job = input.substr(pos + 1, input.length());
         }
@@ -258,7 +255,7 @@ void Mtmchkin::getInputPlayers()
             std::getline(cin, input);
             pos = input.find(" ");
             name = input.substr(0, pos);
-            if (pos < input.length())
+            if ((unsigned int)pos < input.length())
             {
                 job = input.substr(pos + 1, input.length());
             }
@@ -270,15 +267,15 @@ void Mtmchkin::getInputPlayers()
         }
         if (job == ROGUE)
         {
-            m_players[i] = (unique_ptr<Player>(new Rogue(name)));
+            m_players[i] = (std::unique_ptr<Player>(new Rogue(name)));
         }
         if (job == WIZARD)
         {
-            m_players[i] = (unique_ptr<Player>(new Wizard(name)));
+            m_players[i] = (std::unique_ptr<Player>(new Wizard(name)));
         }
         if (job == FIGHTER)
         {
-            m_players[i] = (unique_ptr<Player>(new Fighter(name)));
+            m_players[i] = (std::unique_ptr<Player>(new Fighter(name)));
         }
         m_activePlayers[i] = true;
     }

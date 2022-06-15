@@ -7,9 +7,13 @@
 
 Card::Card(const std::string name):m_name(name)
 {}
- void Card::PrintCard(const Card& card) const
+ void Card::printCard(const Card& card) const
 {
     printCardDetails(std::cout,m_name);
     printEndOfCardDetails(std::cout);
 }
 
+std::ostream& operator<<(std::ostream& os, const Card& card){
+    card.printCard(card);
+    return std::cout;
+}
