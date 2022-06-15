@@ -35,7 +35,7 @@ public:
      *      void
      */
     virtual void applyEncounter(Player &player) const = 0;
-    void PrintCard(const Card &card) const override;
+    void printCard(const Card &card) const override;
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
      */

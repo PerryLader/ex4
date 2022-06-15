@@ -1,6 +1,6 @@
 
 #include "Player.h"
-#include "utilities.h"
+#include "../utilities.h"
 using std::ostream;
 using std::string;
 
@@ -13,12 +13,14 @@ Player::Player(const string playerName) : m_name(playerName),
 {
 }
 
-Player::Player(const Player &player) : m_level(player.m_level),
+Player::Player(const Player &player) : m_name(player.m_name),
+                                       m_level(player.m_level),
                                        m_force(player.m_force),
                                        m_maxHp(player.m_maxHp),
                                        m_curHp(player.m_curHp),
-                                       m_coins(player.m_coins),
-                                       m_name(player.m_name) {}
+                                       m_coins(player.m_coins)
+{
+}
 // oprators
 Player &Player::operator=(const Player &player)
 {

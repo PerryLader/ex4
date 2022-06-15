@@ -6,7 +6,7 @@
 BattleCard::BattleCard(const std::string name) : Card(name)
 {
 }
-void Card::PrintCard(const Card &card) const
+void Card::printCard(const Card &card) const
 {
 
     printCardDetails(std::cout, m_name);

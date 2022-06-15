@@ -39,6 +39,7 @@ public:
     {
         return m_name;
     }
+
     /*
      * Handling the player's applyEncounter with the card:
      *
@@ -47,7 +48,7 @@ public:
      *      void
     */
     virtual void applyEncounter(Player& player) const=0;
-    virtual void PrintCard(const Card& card) const;
+    virtual void printCard(const Card& card) const;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -58,7 +59,7 @@ public:
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
-
+    friend std::ostream& operator << (std::ostream& os, const Card& card);
     Card(const Card&) = default;
     virtual ~Card();
     Card& operator=(const Card& other) = default;
