@@ -26,7 +26,6 @@ public:
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    Pitfall()=delete; 
 
 
     /*

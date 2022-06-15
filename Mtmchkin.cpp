@@ -1,8 +1,91 @@
 #include "Mtmchkin.h"
 #include <iostream>
+#include <fstream>
+
+#include "./Cards/Goblin.h"
+#include "./Cards/Barfight.h"
+#include "./Cards/Dragon.h"
+#include "./Cards/Fairy.h"
+#include "./Cards/Merchant.h"
+#include "./Cards/Pitfall.h"
+#include "./Cards/Treasure.h"
+#include "./Cards/Vampire.h"
+#include "./Exception.h"
+
 using std::cin;
+using std::ifstream;
 using std::string;
 using std::unique_ptr;
+bool Mtmchkin::validateEnoughCards()
+{
+    if (m_cards.size() < MIN_DECK_CARDS)
+    {
+        throw DeckFileInvalidSize();
+    }
+}
+void Mtmchkin::initDeckMap(std::map<string, unique_ptr<Card>> &deck)
+{
+    deck[GOBLIN] = unique_ptr<Card>(new Goblin());
+    deck[FAIRY] = unique_ptr<Card>(new Fairy());
+    deck[DRAGON] = unique_ptr<Card>(new Dragon());
+    deck[VAMPIRE] = unique_ptr<Card>(new Vampire());
+    deck[TREASURE] = unique_ptr<Card>(new Treasure());
+    deck[PITFALL] = unique_ptr<Card>(new Pitfall());
+    deck[MERCHANT] = unique_ptr<Card>(new Merchant());
+    deck[BARFIGHT] = unique_ptr<Card>(new Barfight());
+}
+void Mtmchkin::insertCard(const string cardName, const int curr_row)
+{
+    std::map<string, unique_ptr<Card>> deck;
+    initDeckMap(deck);
+    if (deck.find(cardName) == deck.end())
+    {
+        // bad card name
+        // add throw
+        throw DeckFileFormatError(curr_row);
+    }
+    else
+    {
+        m_cards.push(deck[cardName]);
+    }
+}
+Mtmchkin::Mtmchkin(const std::string fileName)
+{
+    ifstream file;
+    int curr_row = START_ROW;
+    file.open(fileName);
+    if (file.fail())
+    {
+        throw DeckFileNotFound();
+    }
+
+    string cardName;
+    while (std::getline(file, cardName))
+    {
+        try
+        {
+            insertCard(cardName, curr_row);
+        }
+        catch (const DeckFileFormatError &e)
+        {
+            std::cerr << e.what();
+        }
+        curr_row++;
+    }
+
+    validateEnoughCards();
+    initActivePlayers();
+    getInputTeamSize();
+    getInputPlayers();
+}
+
+void Mtmchkin::initActivePlayers()
+{
+    for (int i = 0; i < MAX_PLAYER; i++)
+    {
+        m_activePlayers.push_back(false);
+    }
+}
 
 void Mtmchkin::playRound()
 {
@@ -74,7 +157,7 @@ void Mtmchkin::getInputTeamSize()
     }
 }
 
-bool Mtmchkin::checkIfNameLegal(const string &name)
+bool Mtmchkin::checkIfNameIsLegal(const string &name)
 {
     if (name.length() > 15)
     {
@@ -121,7 +204,7 @@ void Mtmchkin::getInputPlayers()
         {
             job = UNDEFINED;
         }
-        bool illegal = !checkIfNameLegal(name) || !checkClassIsLegal(job);
+        bool illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
         while (illegal)
         {
             std::getline(cin, input);
@@ -135,7 +218,7 @@ void Mtmchkin::getInputPlayers()
             {
                 job = UNDEFINED;
             }
-            illegal = !checkIfNameLegal(name) || !checkClassIsLegal(job);
+            illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
         }
         if (job == ROGUE)
         {
@@ -149,5 +232,6 @@ void Mtmchkin::getInputPlayers()
         {
             m_players[i] = (unique_ptr<Player>(new Fighter(name)));
         }
+        m_activePlayers[i] = true;
     }
 }

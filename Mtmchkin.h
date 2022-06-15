@@ -7,13 +7,18 @@
 #include "./Players/Rogue.h"
 #include "./Players/Wizard.h"
 #include "./Players/Fighter.h"
+#include <map>
+const std::string ROGUE = "Rogue";
+const std::string WIZARD = "Wizard";
+const std::string FIGHTER = "Fighter";
+const std::string UNDEFINED = "Undefined";
+const int MAX_PLAYER = 6;
+const int MIN_DECK_CARDS=5;
+const int START_ROW = 1;
 
 
 class Mtmchkin {
-const string ROGUE = "Rogue";
-const string WIZARD = "Wizard";
-const string FIGHTER = "Fighter";
-const string UNDEFINED = "Undefined";
+
 
 std::queue<unique_ptr<Card>> m_cards;
 std::vector<unique_ptr<Player>> m_players;
@@ -22,11 +27,16 @@ std::vector<bool> m_activePlayers;
 int m_teamSize;
 
 //helper methods
+void initDeckMap(std::map<string, unique_ptr<Card>>& deck);
 void getInputTeamSize();
 void getInputPlayers();
 void updateLeaderBoard();
-bool checkClassIsLegal(const string& job);
-bool checkIfNameLegal(const string& name);
+bool checkClassIsLegal(const std::string& job);
+bool checkIfNameIsLegal(const std::string& name);
+void initActivePlayers();
+void insertCard(const string cardName, int curr_row);
+bool validateEnoughCards();
+
 public:
     /*
     * C'tor of Mtmchkin class

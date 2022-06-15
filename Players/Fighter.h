@@ -1,6 +1,8 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 #include "Player.h"
+#include "utilities.h"
+
 
 class Fighter : public Player {
     public:
