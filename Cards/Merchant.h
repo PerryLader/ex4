@@ -23,11 +23,6 @@ public:
     */
     void applyEncounter(Player& player) const override;
 
-    /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-    */
-    Merchant()=delete; 
-
 
     /*
      * Here we are explicitly telling the compiler to use the default methods

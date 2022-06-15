@@ -2,7 +2,6 @@
 #define EX2_PLAYER_H
 
 #include <iostream>
-#include "../utilities.h"
 const int DEFAULT_HP = 100;
 const int DEFAULT_FORCE = 5;
 const int DEFAULT_LVL = 1;

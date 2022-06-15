@@ -1,6 +1,8 @@
 #ifndef ROGUE_H
 #define ROGUE_H
+
 #include "Player.h"
+#include "utilities.h"
 
 class Rogue: public Player{
     public:

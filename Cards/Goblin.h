@@ -27,8 +27,6 @@ public:
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    Goblin()=delete; 
-
 
     /*
      * Here we are explicitly telling the compiler to use the default methods

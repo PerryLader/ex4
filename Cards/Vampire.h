@@ -28,8 +28,6 @@ public:
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    Vampire()=delete; 
-
 
     /*
      * Here we are explicitly telling the compiler to use the default methods
