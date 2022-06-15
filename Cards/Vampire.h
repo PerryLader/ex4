@@ -2,8 +2,7 @@
 #ifndef Vampire_H
 #define Vampire_H
 #include "BattleCard.h"
-#include <iostream>
-using namespace std;
+
 
 class Vampire:public BattleCard {
 public:
@@ -29,8 +28,6 @@ public:
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */
-    Vampire()=delete; 
-
 
     /*
      * Here we are explicitly telling the compiler to use the default methods

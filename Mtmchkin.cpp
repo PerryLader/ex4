@@ -1,79 +1,237 @@
 #include "Mtmchkin.h"
 #include <iostream>
-using namespace std;
+#include <fstream>
 
-// dosent know how to handle numbers bigger than the biggest int , check the option of unsigned int
-// dosent know how to handle cases that start with an int and end with char like "3a"
+#include "./Cards/Goblin.h"
+#include "./Cards/Barfight.h"
+#include "./Cards/Dragon.h"
+#include "./Cards/Fairy.h"
+#include "./Cards/Merchant.h"
+#include "./Cards/Pitfall.h"
+#include "./Cards/Treasure.h"
+#include "./Cards/Vampire.h"
+#include "./Exception.h"
 
-void Mtmchkin::getInputTeamSize()
+using std::cin;
+using std::ifstream;
+using std::string;
+using std::unique_ptr;
+bool Mtmchkin::validateEnoughCards()
 {
-    printStartGameMessage();
-    printEnterTeamSizeMessage();
-    int teamSize = 0;
-    while (cin >> teamSize && teamSize > 6 || teamSize < 2)
+    if (m_cards.size() < MIN_DECK_CARDS)
     {
-        if (cin.fail())
+        throw DeckFileInvalidSize();
+    }
+}
+void Mtmchkin::initDeckMap(std::map<string, unique_ptr<Card>> &deck)
+{
+    deck[GOBLIN] = unique_ptr<Card>(new Goblin());
+    deck[FAIRY] = unique_ptr<Card>(new Fairy());
+    deck[DRAGON] = unique_ptr<Card>(new Dragon());
+    deck[VAMPIRE] = unique_ptr<Card>(new Vampire());
+    deck[TREASURE] = unique_ptr<Card>(new Treasure());
+    deck[PITFALL] = unique_ptr<Card>(new Pitfall());
+    deck[MERCHANT] = unique_ptr<Card>(new Merchant());
+    deck[BARFIGHT] = unique_ptr<Card>(new Barfight());
+}
+void Mtmchkin::insertCard(const string cardName, const int curr_row)
+{
+    std::map<string, unique_ptr<Card>> deck;
+    initDeckMap(deck);
+    if (deck.find(cardName) == deck.end())
+    {
+        // bad card name
+        // add throw
+        throw DeckFileFormatError(curr_row);
+    }
+    else
+    {
+        m_cards.push(deck[cardName]);
+    }
+}
+Mtmchkin::Mtmchkin(const std::string fileName)
+{
+    ifstream file;
+    int curr_row = START_ROW;
+    file.open(fileName);
+    if (file.fail())
+    {
+        throw DeckFileNotFound();
+    }
+
+    string cardName;
+    while (std::getline(file, cardName))
+    {
+        try
         {
-            printInvalidInput();
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            insertCard(cardName, curr_row);
         }
-        else
+        catch (const DeckFileFormatError &e)
         {
-            printInvalidTeamSize();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cerr << e.what();
+        }
+        curr_row++;
+    }
+
+    validateEnoughCards();
+    initActivePlayers();
+    getInputTeamSize();
+    getInputPlayers();
+}
+
+void Mtmchkin::initActivePlayers()
+{
+    for (int i = 0; i < MAX_PLAYER; i++)
+    {
+        m_activePlayers.push_back(false);
+    }
+}
+
+void Mtmchkin::playRound()
+{
+    for (int i = 0; i < m_teamSize; i++)
+    {
+        if (m_activePlayers[i])
+        {
+            m_cards.front()->applyEncounter(*(m_players[i]));
+            unique_ptr<Card> temp = std::move(m_cards.front());
+            m_cards.push(temp);
+            m_cards.pop();
         }
     }
-    m_teamSize = teamSize;
+    updateLeaderBoard();
+}
+
+void Mtmchkin::updateLeaderBoard()
+{
+    for (int i = 0; i < m_teamSize; i++)
+    {
+        if (m_activePlayers[i])
+        {
+            if (m_players[i]->isKnockedOut())
+            {
+                for (int j = m_teamSize - 1; j >= 0; j--)
+                {
+                    if (m_leadboard[j] == nullptr)
+                    {
+                        m_leadboard[j] = std::move(m_players[i]);
+                        m_activePlayers[i] = false;
+                    }
+                }
+            }
+            else if (m_players[i]->isWinner())
+            {
+                for (int j = 0; j < m_teamSize; j++)
+                {
+                    if (m_leadboard[j] == nullptr)
+                    {
+                        m_leadboard[j] = std::move(m_players[i]);
+                        m_activePlayers[i] = false;
+                    }
+                }
+            }
+        }
+    }
+}
+// dosent know how to handle cases that start with an int and end with char like "3a"
+void Mtmchkin::getInputTeamSize()
+{
+
+    printStartGameMessage();
+    printEnterTeamSizeMessage();
+    string choosen;
+    std::getline(cin, choosen);
+    while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54)
+    {
+
+        printInvalidTeamSize();
+        std::getline(cin, choosen);
+    }
+    try
+    {
+        m_teamSize = stoi(choosen);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+bool Mtmchkin::checkIfNameIsLegal(const string &name)
+{
+    if (name.length() > 15)
+    {
+        printInvalidName();
+        return false;
+    }
+    int currChar;
+    for (char i : name)
+    {
+        currChar = int(i);
+        if ((currChar > 122) || (currChar < 97 && currChar > 90) || (currChar < 65))
+        {
+            printInvalidName();
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Mtmchkin::checkClassIsLegal(const string &job)
+{
+    if (!(job == ROGUE || job == WIZARD || job == FIGHTER))
+    {
+        printInvalidClass();
+        return false;
+    }
+    return true;
 }
 
 void Mtmchkin::getInputPlayers()
 {
-    printInsertPlayerMessage();
     for (int i = 0; i < m_teamSize; i++)
     {
-        string input = "";
-        cin >> input;
+        string input;
+        std::getline(cin, input);
         int pos = input.find(" ");
         string name = input.substr(0, pos);
-        string job = input.substr(pos, input.length());
-        // check name as well
-        while (!(job == ROGUE || job == MAGE || job == FIGHTER))
+        string job;
+        if (pos < input.length())
         {
-            // if (cin.fail())
-            // {
-            //     printInvalidInput();
-            //     cin.clear();
-            //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            // }
-            // else
-            // {
-            printInvalidClass();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            input = "";
-            cin >> input;
+            job = input.substr(pos + 1, input.length());
+        }
+        else
+        {
+            job = UNDEFINED;
+        }
+        bool illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
+        while (illegal)
+        {
+            std::getline(cin, input);
             pos = input.find(" ");
             name = input.substr(0, pos);
-            job = input.substr(pos, input.length());
-            // }
+            if (pos < input.length())
+            {
+                job = input.substr(pos + 1, input.length());
+            }
+            else
+            {
+                job = UNDEFINED;
+            }
+            illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
         }
         if (job == ROGUE)
         {
-            Players.push(unique_ptr<Player>(new Rogue(name)));
+            m_players[i] = (unique_ptr<Player>(new Rogue(name)));
         }
-        if (job == MAGE)
+        if (job == WIZARD)
         {
-            Players.push(unique_ptr<Player>(new Mage(name)));
+            m_players[i] = (unique_ptr<Player>(new Wizard(name)));
         }
         if (job == FIGHTER)
         {
-            Players.push(unique_ptr<Player>(new Fighter(name)));
+            m_players[i] = (unique_ptr<Player>(new Fighter(name)));
         }
+        m_activePlayers[i] = true;
     }
-}
-
-int main()
-{
-
-    return 0;
 }

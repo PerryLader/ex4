@@ -1,6 +1,8 @@
 #ifndef FIGHTER_H
 #define FIGHTER_H
 #include "Player.h"
+#include "utilities.h"
+
 
 class Fighter : public Player {
     public:
@@ -8,7 +10,7 @@ class Fighter : public Player {
     ~Fighter() override;
     Fighter(const Fighter&) = default;
     int getAttackStrength() override;
-    void printInfo(ostream& os) const override;
+    void printInfo(std::ostream& os) const override;
 };
 
 #endif

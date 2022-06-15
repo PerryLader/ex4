@@ -1,8 +1,8 @@
-#include <iostream>
-using namespace std;
 
 #include "Player.h"
 #include "utilities.h"
+using std::ostream;
+using std::string;
 
 Player::Player(const string playerName) : m_name(playerName),
                                           m_level(DEFAULT_LVL),
@@ -60,10 +60,23 @@ int Player::getCurrHp()
 {
     return m_curHp;
 }
+string Player::getName()
+{
+    return m_name;
+}
+int Player::getMoney()
+{
+    return m_coins;
+}
 bool Player::isKnockedOut()
 {
 
     return (m_curHp <= 0);
+}
+
+bool Player::isWinner()
+{
+    return (m_level == MAX_LVL);
 }
 bool Player::pay(const int coinsSize)
 {

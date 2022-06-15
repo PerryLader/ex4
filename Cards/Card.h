@@ -5,16 +5,27 @@
 #define Card_H
 #include "../Players/Player.h"
 #include <iostream>
-using namespace std;
-
-const string GOBLIN="Goblin";
-const string DRAGON="Dragon";
-const string VAMPIRE="Vampire";
+#include "../utilities.h"
 
 
-
+const std::string GOBLIN="Goblin";
+const std::string DRAGON="Dragon";
+const std::string VAMPIRE="Vampire";
+const std::string BARFIGHT="Barfight";
+const std::string FAIRY="Fairy";
+const std::string MERCHANT="Merchant";
+const std::string PITFALL="Pitfall";
+const std::string TREASURE="Treasure";
+const int DONT_BUY=0;
+const int BUY_HEAL=1;
+const int BUY_FORCE=2;
+const int PRICE_HEAL=5;
+const int PRICE_FORCE=10;
+const int DEF_BUFF=1;
+const int DEF_HEAL=1;
 class Card {
 public:
+
     /*
      * C'tor of Card class
      *
@@ -23,8 +34,11 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Card();
-    
+    Card(const std::string name);
+    const std::string getName()
+    {
+        return m_name;
+    }
     /*
      * Handling the player's applyEncounter with the card:
      *
@@ -33,6 +47,7 @@ public:
      *      void
     */
     virtual void applyEncounter(Player& player) const=0;
+    virtual void PrintCard(const Card& card) const;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -43,11 +58,13 @@ public:
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
+
     Card(const Card&) = default;
     virtual ~Card();
     Card& operator=(const Card& other) = default;
 
-
+protected:
+const std::string m_name;
 };
 
 #endif 

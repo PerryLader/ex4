@@ -1,8 +1,8 @@
-#ifndef Dragon_H
-#define Dragon_H
-#include "BattleCard.h"
+#ifndef Merchant_H
+#define Merchant_H
+#include "Card.h"
 
-class Dragon:public BattleCard {
+class Merchant:public Card {
 public:
     /*
      * C'tor of Card class
@@ -12,7 +12,7 @@ public:
      * @return
      *      A new instance of Card.
     */
-    Dragon();
+    Merchant();
     
     /*
      * Handling the player's applyEncounter with the card:
@@ -23,17 +23,13 @@ public:
     */
     void applyEncounter(Player& player) const override;
 
-    /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-    */
-
 
     /*
      * Here we are explicitly telling the compiler to use the default methods
     */
-    Dragon(const Dragon&) = default;
-    ~Dragon() override;
-    Dragon& operator=(const Dragon& other) = default;
+    Merchant(const Merchant&) = default;
+    ~Merchant() override;
+    Merchant& operator=(const Merchant& other) = default;
 };
 
 #endif 

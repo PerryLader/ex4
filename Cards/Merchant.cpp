@@ -40,7 +40,12 @@ void Merchant::applyEncounter(Player &player) const
         if (player.pay(PRICE_HEAL))
         {
             player.heal(DEF_HEAL);
+<<<<<<< HEAD
             printMerchantSummary(cout, player.getName(), BUY_HEAL, PRICE_HEAL);
+=======
+        printMerchantSummary(cout, player.getName(), BUY_HEAL, PRICE_HEAL);
+
+>>>>>>> 2addc046132c2c6a6b9cdf759d26433c4ce29aec
         }
         else
         {
@@ -52,12 +57,22 @@ void Merchant::applyEncounter(Player &player) const
         if (player.pay(PRICE_FORCE))
         {
             player.buff(DEF_BUFF);
+<<<<<<< HEAD
             printMerchantSummary(cout, player.getName(), BUY_FORCE, PRICE_FORCE);
+=======
+        printMerchantSummary(cout, player.getName(), BUY_FORCE, PRICE_FORCE);
+
+>>>>>>> 2addc046132c2c6a6b9cdf759d26433c4ce29aec
         }
         else
         {
             printMerchantInsufficientCoins(cout);
+<<<<<<< HEAD
             printMerchantSummary(cout, player.getName(), BUY_FORCE, DONT_BUY);
+=======
+        printMerchantSummary(cout, player.getName(), BUY_FORCE, DONT_BUY);
+
+>>>>>>> 2addc046132c2c6a6b9cdf759d26433c4ce29aec
         }
         break;
     default:

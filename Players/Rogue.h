@@ -1,6 +1,8 @@
 #ifndef ROGUE_H
 #define ROGUE_H
+
 #include "Player.h"
+#include "utilities.h"
 
 class Rogue: public Player{
     public:
@@ -8,7 +10,7 @@ class Rogue: public Player{
     ~Rogue() override;
     Rogue(const Rogue&) = default;
     void addCoins(const int coinsSize) override;
-    void printInfo(ostream& os) const override;
+    void printInfo(std::ostream& os) const override;
 };
 
 #endif

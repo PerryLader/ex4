@@ -1,4 +1,5 @@
 #include "Rogue.h"
+using std::string;
 
 Rogue::Rogue(const string playerName) :
 Player(playerName) {};
