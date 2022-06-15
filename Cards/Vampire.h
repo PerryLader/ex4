@@ -20,7 +20,7 @@ public:
      * Handling the player's applyEncounter with the card:
      *
      * @param player - The player.
-     * @return
+     * @returns
      *      void
     */
     void applyEncounter(Player& player) const override;

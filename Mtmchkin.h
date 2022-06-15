@@ -25,6 +25,7 @@ std::vector<unique_ptr<Player>> m_players;
 std::vector<unique_ptr<Player>> m_leadboard;
 std::vector<bool> m_activePlayers;
 int m_teamSize;
+int m_roundCount = 1;
 
 //helper methods
 void initDeckMap(std::map<string, unique_ptr<Card>>& deck);
@@ -36,6 +37,7 @@ bool checkIfNameIsLegal(const std::string& name);
 void initActivePlayers();
 void insertCard(const string cardName, int curr_row);
 bool validateEnoughCards();
+void initLeaderBoard( std::vector<unique_ptr<Player>>& leaderBoard);
 
 public:
     /*

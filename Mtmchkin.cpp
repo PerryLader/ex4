@@ -51,6 +51,7 @@ void Mtmchkin::insertCard(const string cardName, const int curr_row)
 }
 Mtmchkin::Mtmchkin(const std::string fileName)
 {
+    printStartGameMessage();
     ifstream file;
     int curr_row = START_ROW;
     file.open(fileName);
@@ -60,8 +61,9 @@ Mtmchkin::Mtmchkin(const std::string fileName)
     }
 
     string cardName;
-    while (std::getline(file, cardName))
+    while (!file.eof())
     {
+        std::getline(file, cardName);
         try
         {
             insertCard(cardName, curr_row);
@@ -76,7 +78,39 @@ Mtmchkin::Mtmchkin(const std::string fileName)
     validateEnoughCards();
     initActivePlayers();
     getInputTeamSize();
+    initLeaderBoard(m_leadboard);
     getInputPlayers();
+}
+void Mtmchkin::initLeaderBoard(std::vector<unique_ptr<Player>> &leaderBoard)
+{
+    for (int i = 0; i < m_teamSize; i++)
+    {
+        leaderBoard.push_back(nullptr);
+    }
+}
+void Mtmchkin::printLeaderBoard() const
+{
+    //void printPlayerLeaderBoard(int ranking, const Player &player);
+    int rank = 0;
+    printLeaderBoardStartMessage();
+    while(m_leadboard[rank] != nullptr){
+        printPlayerLeaderBoard(rank +1 , *m_leadboard[rank]);
+        rank++;
+    }
+    for(int i = 0; i<m_teamSize ; i ++){
+        if(m_activePlayers[i]){
+            printPlayerLeaderBoard(rank +1 , *m_players[i]);
+            rank++;
+        }
+    }
+    for(; rank <m_teamSize ; rank++){
+       printPlayerLeaderBoard(rank +1 , *m_leadboard[rank]);
+    }
+}
+
+int Mtmchkin::getNumberOfRounds() const
+{
+    return m_roundCount;
 }
 
 void Mtmchkin::initActivePlayers()
@@ -89,19 +123,32 @@ void Mtmchkin::initActivePlayers()
 
 void Mtmchkin::playRound()
 {
+    printRoundStartMessage(m_roundCount);
     for (int i = 0; i < m_teamSize; i++)
     {
         if (m_activePlayers[i])
         {
+            printTurnStartMessage(m_players[i]->getName());
             m_cards.front()->applyEncounter(*(m_players[i]));
             unique_ptr<Card> temp = std::move(m_cards.front());
             m_cards.push(temp);
             m_cards.pop();
         }
     }
+    m_roundCount++;
     updateLeaderBoard();
 }
-
+bool Mtmchkin::isGameOver() const
+{
+    for (int i = 0; i < MAX_PLAYER; i++)
+    {
+        if (m_activePlayers[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
 void Mtmchkin::updateLeaderBoard()
 {
     for (int i = 0; i < m_teamSize; i++)
@@ -137,14 +184,13 @@ void Mtmchkin::updateLeaderBoard()
 void Mtmchkin::getInputTeamSize()
 {
 
-    printStartGameMessage();
     printEnterTeamSizeMessage();
     string choosen;
     std::getline(cin, choosen);
-    while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54)
+    while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54 || !cin.eof())
     {
-
         printInvalidTeamSize();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(cin, choosen);
     }
     try
@@ -186,6 +232,7 @@ bool Mtmchkin::checkClassIsLegal(const string &job)
     }
     return true;
 }
+// fix all get line problems
 
 void Mtmchkin::getInputPlayers()
 {
@@ -193,6 +240,7 @@ void Mtmchkin::getInputPlayers()
     {
         string input;
         std::getline(cin, input);
+
         int pos = input.find(" ");
         string name = input.substr(0, pos);
         string job;
