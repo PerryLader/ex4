@@ -31,7 +31,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Fairy(const Fairy&) = default;
-    ~Fairy() override;
+    // ~Fairy() override;
     Fairy& operator=(const Fairy& other) = default;
 };
 

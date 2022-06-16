@@ -6,9 +6,8 @@
 BattleCard::BattleCard(const std::string name) : Card(name)
 {
 }
-void Card::printCard(const Card &card) const
+void BattleCard::printCard(const Card &card) const
 {
-
     printCardDetails(std::cout, m_name);
     if (m_name == DRAGON)
     {

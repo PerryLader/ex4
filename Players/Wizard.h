@@ -8,7 +8,7 @@
 class Wizard: public Player {
 public:
 Wizard(const std::string playerName);
-~Wizard() override;
+// ~Wizard() override;
 Wizard(const Wizard&) = default;
 void heal(const int healSize) override;
 void printInfo(std::ostream& stream) const override;

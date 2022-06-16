@@ -32,7 +32,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Treasure(const Treasure&) = default;
-    ~Treasure() override;
+    // ~Treasure() override;
     Treasure& operator=(const Treasure& other) = default;
 };
 

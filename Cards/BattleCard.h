@@ -35,7 +35,7 @@ public:
      *      void
      */
     virtual void applyEncounter(Player &player) const = 0;
-    void printCard(const Card &card) const override;
+    void printCard(const Card& card) const override;
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
      */
@@ -45,7 +45,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
      */
     BattleCard(const BattleCard &) = default;
-    virtual ~BattleCard();
+    virtual ~BattleCard() = default;
     BattleCard &operator=(const BattleCard &other) = default;
 };
 

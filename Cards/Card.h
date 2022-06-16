@@ -48,7 +48,6 @@ public:
      *      void
     */
     virtual void applyEncounter(Player& player) const=0;
-    virtual void printCard(const Card& card) const;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -65,6 +64,7 @@ public:
     Card& operator=(const Card& other) = default;
 
 protected:
+virtual void printCard(const Card& card) const;
 const std::string m_name;
 };
 
