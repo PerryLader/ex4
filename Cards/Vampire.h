@@ -33,7 +33,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Vampire(const Vampire&) = default;
-    ~Vampire() override;
+    ~Vampire() = default;
     Vampire& operator=(const Vampire& other) = default;
 };
 

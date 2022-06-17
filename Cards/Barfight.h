@@ -32,7 +32,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
      */
     Barfight(const Barfight &) = default;
-    ~Barfight() override;
+    // ~Barfight() override;
     Barfight &operator=(const Barfight &other) = default;
 };
 
