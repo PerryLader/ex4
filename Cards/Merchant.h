@@ -1,6 +1,7 @@
 #ifndef Merchant_H
 #define Merchant_H
 #include "Card.h"
+#include "../Players/Player.h"
 
 class Merchant:public Card {
 public:
@@ -28,7 +29,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Merchant(const Merchant&) = default;
-    // ~Merchant() override;
+    ~Merchant() = default;
     Merchant& operator=(const Merchant& other) = default;
 };
 

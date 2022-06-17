@@ -1,6 +1,9 @@
 #ifndef Fairy_H
 #define Fairy_H
 #include "Card.h"
+#include "../Players/Wizard.h"
+#include "../Players/Player.h"
+
 
 class Fairy:public Card {
 public:
@@ -31,7 +34,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Fairy(const Fairy&) = default;
-    // ~Fairy() override;
+    ~Fairy() = default;
     Fairy& operator=(const Fairy& other) = default;
 };
 

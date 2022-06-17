@@ -1,6 +1,5 @@
 #include "Barfight.h"
 #include "../utilities.h"
-#include "../Players/Fighter.h"
 
 Barfight::Barfight() : Card(BARFIGHT)
 {

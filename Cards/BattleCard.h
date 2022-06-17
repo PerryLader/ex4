@@ -2,6 +2,7 @@
 #ifndef BattleCard_H
 #define BattleCard_H
 #include "Card.h"
+#include "../Players/Player.h"
 
 const int GOBLIN_FORCE = 6;
 const int GOBLIN_LOOT = 2;
@@ -35,7 +36,7 @@ public:
      *      void
      */
     virtual void applyEncounter(Player &player) const = 0;
-    void printCard(const Card& card) const override;
+    void printCard() const override;
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
      */
