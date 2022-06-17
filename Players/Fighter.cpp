@@ -9,7 +9,7 @@ int Fighter::getAttackStrength()
     return strength;
 }
 
-void Fighter::printInfo(std::ostream &os) const
+void Fighter::printInfo(std::ostream& os) const
 {
     printPlayerDetails(os, m_name, "Fighter", m_level, m_force, m_curHp, m_coins);
 }

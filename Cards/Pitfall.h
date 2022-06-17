@@ -1,6 +1,8 @@
 #ifndef PITFALL_H
 #define PITFALL_H
 #include "Card.h"
+#include "../Players/Player.h"
+#include "../Players/Rogue.h"
 
 class Pitfall:public Card {
 public:
@@ -32,7 +34,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Pitfall(const Pitfall&) = default;
-    // ~Pitfall() override;
+    ~Pitfall()= default;
     Pitfall& operator=(const Pitfall& other) = default;
 };
 

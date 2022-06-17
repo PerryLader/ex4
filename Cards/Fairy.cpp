@@ -1,6 +1,5 @@
 #include "Fairy.h"
 #include "../utilities.h"
-#include "../Players/Wizard.h"
 
 Fairy::Fairy() : Card(FAIRY)
 {
