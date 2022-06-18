@@ -1,4 +1,3 @@
-
 #include <functional>
 #include <string>
 #include <iostream>
@@ -82,20 +81,14 @@ bool GeneralGameSimulationTest(const string &tempDeckFilename, string input, str
     //   init cin from file
     createTextFile(tempDeckFilename+".txt",deck);
     istringstream in(input);
-    std::cout << "got here 1" << std::endl;
     std::streambuf *cinbuf = std::cin.rdbuf(); //save old buf
-        std::cout << "got here 2" << std::endl;
     std::cin.rdbuf(in.rdbuf());
-        std::cout << "got here 3" << std::endl;
+
     std::ofstream outfile(tempDeckFilename+"out.txt");
-        std::cout << "got here 4" << std::endl;
     std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
-        std::cout << "got here 5" << std::endl;
     std::cout.rdbuf(outfile.rdbuf());
-        std::cout << "got here 6" << std::endl;
     Mtmchkin game(tempDeckFilename+".txt");
     while(!game.isGameOver() && game.getNumberOfRounds() < 100){
-            // std::cout << game.getNumberOfRounds() << std::endl;
         game.playRound();
         game.printLeaderBoard();
     }
@@ -245,7 +238,7 @@ bool badPlayerInputTest()
 bool merchantInputTest()
 {
     const string tmp_file("merchantInput_test");
-    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter"
+    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter\n"
                  "1\n"
                  "1\n"
                  "0\n"
