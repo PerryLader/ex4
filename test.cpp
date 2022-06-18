@@ -26,14 +26,13 @@
 #include <fstream>
 #include <cstring>
 
-using std::unique_ptr;
-using std::cout;
 using std::cerr;
-using std::string;
+using std::cout;
 using std::fstream;
 using std::istringstream;
+using std::string;
+using std::unique_ptr;
 using std::vector;
-
 
 /* ---------------------------------------------------------------------------------------------- */
 // --------------------------------       General Helper Functions          ------------------------------
@@ -41,7 +40,8 @@ using std::vector;
 void createTextFile(const string &filename, const string &input)
 {
     std::ofstream file(filename);
-    if(file){
+    if (file)
+    {
         file << input;
     }
 }
@@ -53,25 +53,36 @@ void deleteTextFile(const string &filename)
 
 bool compareFiles(const string &filename1, const string &filename2)
 {
-    string line1,line2;
-    fstream file1(filename1),file2(filename2);
-    if( !file2){
-         cerr<<"Error opening file 2"<<std::endl;
-         return false;
+    string line1, line2;
+    fstream file1(filename1), file2(filename2);
+    if (!file2)
+    {
+        cerr << "Error opening file 2" << std::endl;
+        return false;
     }
-	if(!file1 ){
-         cerr<<"Error opening file 1"<<std::endl;
-         return false;
+    if (!file1)
+    {
+        cerr << "Error opening file 1" << std::endl;
+        return false;
     }
-    while(!file1.eof()){ //read file until you reach the end
-        getline(file1,line1);
-        getline(file2,line2);
-        if(!(line1==line2))
+    int x = 0;
+    while (!file1.eof())
+    { // read file until you reach the end
+        getline(file1, line1);
+        getline(file2, line2);
+        if (!(line1 == line2))
         {
+            // cout << "line1"<< std::endl;
+            // cout << line1.size()<< std::endl;
+            // cout << "line2"<< std::endl;
+            // cout << line2.size()<< std::endl;
+
             return false;
         }
+        x++;
     }
-    if(!file2.eof()){
+    if (!file2.eof())
+    {
         return false;
     }
     return true;
@@ -79,54 +90,49 @@ bool compareFiles(const string &filename1, const string &filename2)
 
 bool GeneralGameSimulationTest(const string &tempDeckFilename, string input, string deck, string expectedOutputFileName)
 {
-    //   init cin from file
-    createTextFile(tempDeckFilename+".txt",deck);
+
+    createTextFile(tempDeckFilename + ".txt", deck);
     istringstream in(input);
-    std::cout << "got here 1" << std::endl;
-    std::streambuf *cinbuf = std::cin.rdbuf(); //save old buf
-        std::cout << "got here 2" << std::endl;
+
+    std::streambuf *cinbuf = std::cin.rdbuf(); // save old buf
     std::cin.rdbuf(in.rdbuf());
-        std::cout << "got here 3" << std::endl;
-    std::ofstream outfile(tempDeckFilename+"out.txt");
-        std::cout << "got here 4" << std::endl;
-    std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
-        std::cout << "got here 5" << std::endl;
+    std::ofstream outfile(tempDeckFilename + "out.txt");
+    std::streambuf *coutbuf = std::cout.rdbuf(); // save old buf
     std::cout.rdbuf(outfile.rdbuf());
-        std::cout << "got here 6" << std::endl;
-    Mtmchkin game(tempDeckFilename+".txt");
-    while(!game.isGameOver() && game.getNumberOfRounds() < 100){
-            // std::cout << game.getNumberOfRounds() << std::endl;
+    Mtmchkin game(tempDeckFilename + ".txt");
+    while (!game.isGameOver() && game.getNumberOfRounds() < 100)
+    {
+        // std::cout << game.getNumberOfRounds() << std::endl;
         game.playRound();
         game.printLeaderBoard();
     }
 
-    bool res = compareFiles(tempDeckFilename+"out.txt", expectedOutputFileName);
-	outfile.close();
+    bool res = compareFiles(tempDeckFilename + "out.txt", expectedOutputFileName);
+    outfile.close();
     std::cin.rdbuf(cinbuf);
     std::cout.rdbuf(coutbuf);
-    deleteTextFile(tempDeckFilename+".txt");
+    deleteTextFile(tempDeckFilename + ".txt");
     return res;
 }
 
 void run_test(std::function<bool()> test, std::string test_name)
 {
-    if(!test()){
-        std::cout<< test_name <<" FAILED."<<std::endl;
+    if (!test())
+    {
+        std::cout << test_name << " FAILED." << std::endl;
         std::cout << std::endl;
         return;
     }
-    std::cout<<test_name<<" SUCCEEDED."<<std::endl;
+    std::cout << test_name << " SUCCEEDED." << std::endl;
     std::cout << std::endl;
-
 }
-
 
 /* ---------------------------------------------------------------------------------------------- */
 // --------------------------------       Tests for Card class          ------------------------------
 
 bool cardsPrintsTest()
 {
-    
+
     Barfight junta;
     Dragon mushu;
     Fairy alizaMalek;
@@ -135,10 +141,17 @@ bool cardsPrintsTest()
     Pitfall moedB;
     Treasure factor;
     Vampire dracula;
-    cout << junta << std::endl << mushu << std::endl << alizaMalek   
-                    << std::endl << goblin  << std::endl << pizzaHut
-                    << std::endl << moedB  << std::endl << factor
-                    << std::endl << dracula;
+    cout << junta << std::endl
+         << mushu << std::endl
+         << alizaMalek
+         << std::endl
+         << goblin << std::endl
+         << pizzaHut
+         << std::endl
+         << moedB << std::endl
+         << factor
+         << std::endl
+         << dracula;
     return true;
 }
 
@@ -153,10 +166,11 @@ bool testCard()
     cards.push_back(unique_ptr<Card>(new Fairy()));
     cards.push_back(unique_ptr<Card>(new Barfight()));
     cards.push_back(unique_ptr<Card>(new Pitfall()));
-    for(unique_ptr<Card>& card : cards){
+    for (unique_ptr<Card> &card : cards)
+    {
         cout << *card;
     }
-	cards.erase(cards.begin(),cards.end());
+    cards.erase(cards.begin(), cards.end());
     return true;
 }
 
@@ -167,12 +181,14 @@ bool gameRunTest()
 {
     //   init cin from file
     std::ifstream in("in.txt");
-    if(!in.is_open()){
+    if (!in.is_open())
+    {
         throw std::exception();
     }
     std::cin.rdbuf(in.rdbuf());
     Mtmchkin game("gametest.txt");
-    while(!game.isGameOver()){
+    while (!game.isGameOver())
+    {
         game.playRound();
     }
 
@@ -245,7 +261,7 @@ bool badPlayerInputTest()
 bool merchantInputTest()
 {
     const string tmp_file("merchantInput_test");
-    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter"
+    string input("2\nmatamDalf Wizardd\nmatamDalf rogoe\nmatamDalf Wizard\nrocky Fighter\n"
                  "1\n"
                  "1\n"
                  "0\n"
@@ -265,11 +281,13 @@ bool badSizeTest()
     string input("4\nBarbieGirl Wizard\nInABarbieWorld Rogue\nMadeOfPlastic Rogue\nITSFANTASTIC Wizard");
     string deck("Fairy");
     string expectedOutputFilename("notneeded.txt");
-	bool flag= false;
-    try{
+    bool flag = false;
+    try
+    {
         Mtmchkin("inputs/empty.txt");
     }
-    catch(const DeckFileInvalidSize& e){
+    catch (const DeckFileInvalidSize &e)
+    {
         flag = true;
     }
     return flag;
@@ -282,11 +300,13 @@ bool noFileTest()
     string expectedOutputFilename("notneeded.txt");
     string deck("This_is_not_the_file_your_looking_for");
     bool flag = false;
-    try{
+    try
+    {
         Mtmchkin("noFile.txt");
     }
-    catch(const DeckFileNotFound& e){
-        flag=true;
+    catch (const DeckFileNotFound &e)
+    {
+        flag = true;
     }
     return flag;
 }
@@ -298,12 +318,15 @@ bool badFormatTest()
     string deck("SomeBody Once told me the world is gonna roll me\nVampire\n");
     string expectedOutputFilename("notneeded.txt");
     bool flag = false;
-    try {
+    try
+    {
         Mtmchkin("inputs/badFormat_test.txt");
     }
-    catch(const DeckFileFormatError& e){
-        if(strcmp(e.what(),"Deck File Error: File format error in line 2")==0) {
-            flag=true;
+    catch (const DeckFileFormatError &e)
+    {
+        if (strcmp(e.what(), "Deck File Error: File format error in line 2") == 0)
+        {
+            flag = true;
         }
     }
     return flag;
@@ -316,12 +339,15 @@ bool badFormatStartTest()
     string deck("I aint the sharpest tool in the shed\nVampire");
     string expectedOutputFilename("notneeded.txt");
     bool flag = false;
-    try {
+    try
+    {
         Mtmchkin("inputs/badFormat_test_start_of_file.txt");
     }
-    catch(const DeckFileFormatError& e){
-        if(strcmp(e.what(),"Deck File Error: File format error in line 1")==0)
+    catch (const DeckFileFormatError &e)
+    {
+        if (strcmp(e.what(), "Deck File Error: File format error in line 1") == 0)
         {
+
             flag = true;
         }
     }
@@ -331,22 +357,23 @@ bool badFormatStartTest()
 /* ---------------------------------------------------------------------------------------------- */
 // --------------------------------       Main function          ------------------------------
 
-int main(){
-    
-	run_test(cardsPrintsTest,"cardsPrintsTest");
-	run_test(testCard,"Deck creation test");
-	run_test(dragonDenTest,"Dragon Den simulation test");
-	run_test(goblinCaveTest,"Goblin Cave simulation test");
-	run_test(vampireLairTest,"Vampire Lair simulation test");
-	run_test(nonMostersTest,"Non monsters cards simulation test");
-	run_test(badFormatStartTest,"Bad format at start of file exception test");
-	run_test(badFormatTest,"Bad format exception test");
-	run_test(noFileTest,"File Doesnt exist exception test");
-	run_test(badSizeTest,"Bad size exception test");
-    run_test(roundLimitTest,"Round upper limit test");
-    run_test(allTenTest,"All reach lvl 10 test");
-    run_test(badPlayerInputTest,"Bad player input test");
-    run_test(merchantInputTest,"Merchant input test");
+int main()
+{
+
+    run_test(cardsPrintsTest, "cardsPrintsTest");
+    run_test(testCard, "Deck creation test");
+    run_test(dragonDenTest, "Dragon Den simulation test");
+    run_test(goblinCaveTest, "Goblin Cave simulation test");
+    run_test(vampireLairTest, "Vampire Lair simulation test");
+    run_test(nonMostersTest, "Non monsters cards simulation test");
+    run_test(badFormatStartTest, "Bad format at start of file exception test");
+    run_test(badFormatTest, "Bad format exception test");
+    run_test(noFileTest, "File Doesnt exist exception test");
+    run_test(badSizeTest, "Bad size exception test");
+    run_test(roundLimitTest, "Round upper limit test");
+    run_test(allTenTest, "All reach lvl 10 test");
+    run_test(badPlayerInputTest, "Bad player input test");
+    run_test(merchantInputTest, "Merchant input test");
 
     return 0;
 }
