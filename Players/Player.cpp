@@ -26,6 +26,10 @@ void Player::levelUp()
         m_level++;
     }
 }
+void Player::decLvl(const int dec)
+{
+    m_level = m_level - dec;
+}
 int Player::getLevel()
 {
     return m_level;

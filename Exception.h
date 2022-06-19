@@ -1,3 +1,5 @@
+#ifndef Exepetion_H_
+#define Exepetion_H_
 #include "iostream"
 #include <exception>
 
@@ -13,14 +15,13 @@ class DeckFileFormatError : public std::exception
 {
 
 public:
-    int m_lineNumber;
-    DeckFileFormatError(int lineNumber) : m_lineNumber(lineNumber) {}
+    std::string m_msg;
+    DeckFileFormatError(int lineNumber){
+        m_msg = "Deck File Error: File format error in line " + std::to_string(lineNumber);
+    }
     const char *what()  const throw () override
     {
-        exception e;
-        e.what();
-        std::string temp = "Deck File Error: File format error in line " + std::to_string(m_lineNumber);
-        return temp.c_str();
+        return m_msg.c_str();
     }
 };
 
@@ -33,3 +34,4 @@ public:
         return "Deck File Error: Deck size is invalid";
     }
 };
+#endif

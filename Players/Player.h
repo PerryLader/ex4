@@ -34,6 +34,7 @@ public:
     void levelUp();
     void debuff(const int debuffSize);
     void damage(const int dmgSize);
+    void decLvl(const int dec);
     int getLevel();
     int getCurrHp();
     std::string getName();
