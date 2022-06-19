@@ -41,7 +41,8 @@ public:
      * C'tor to the "default card" - Treasure card that gives 0 coins
      */
     BattleCard() = delete;
-
+    virtual bool applyGangEncounter(Player &player) const;
+    virtual void applyLostEncounter(Player &player) const;
     /*
      * Here we are explicitly telling the compiler to use the default methods
      */

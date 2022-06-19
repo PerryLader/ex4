@@ -26,3 +26,9 @@ Goblin::Goblin():
 
     }
 }
+
+
+void Goblin::applyLostEncounter(Player &player) const {
+        player.damage(GOBLIN_HP);
+        printLossBattle(player.getName(),DRAGON);
+}

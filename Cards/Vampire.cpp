@@ -24,3 +24,26 @@ void Vampire::applyEncounter(Player &player) const
         printLossBattle(player.getName(),VAMPIRE);
     }
 }
+
+void Vampire::applyLostEncounter(Player & player) const {
+        player.debuff(1);
+        player.damage(VAMPIRE_HP);
+        printLossBattle(player.getName(),VAMPIRE);
+}
+
+bool Vampire::applyGangEncounter(Player &player) const
+{
+    if (player.getAttackStrength() >= VAMPIRE_FORCE)
+    {
+        player.addCoins(VAMPIRE_LOOT);
+        printWinBattle(player.getName(),VAMPIRE);
+        return false;
+    }
+    else
+    {
+        player.debuff(1);
+        player.damage(VAMPIRE_HP);
+        printLossBattle(player.getName(),VAMPIRE);
+        return true;
+    }
+}
