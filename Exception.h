@@ -1,10 +1,13 @@
 #include "iostream"
 #include <exception>
 
+#ifndef EXCEPTION_H_
+#define EXCEPTION_H_
+
 class DeckFileNotFound : public std::exception
 {
 public:
-    const char *what() const throw () override
+    const char *what() const throw() override
     {
         return "Deck File Error: File not found";
     }
@@ -15,7 +18,7 @@ class DeckFileFormatError : public std::exception
 public:
     int m_lineNumber;
     DeckFileFormatError(int lineNumber) : m_lineNumber(lineNumber) {}
-    const char *what()  const throw () override
+    const char *what() const throw() override
     {
         exception e;
         e.what();
@@ -28,8 +31,9 @@ class DeckFileInvalidSize : public std::exception
 {
 
 public:
-    const char *what() const throw () override
+    const char *what() const throw() override
     {
         return "Deck File Error: Deck size is invalid";
     }
 };
+#endif
