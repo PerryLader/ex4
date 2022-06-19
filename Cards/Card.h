@@ -61,7 +61,7 @@ public:
     */
     friend std::ostream& operator << (std::ostream& os, const Card& card);
     Card(const Card&) = default;
-    virtual ~Card();
+    virtual ~Card()=0;
     Card& operator=(const Card& other) = default;
 
 protected:
