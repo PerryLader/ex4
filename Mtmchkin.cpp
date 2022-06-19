@@ -11,6 +11,7 @@
 #include "./Cards/Treasure.h"
 #include "./Cards/Vampire.h"
 #include "./Exception.h"
+#include "./Cards/Gang.h"
 
 using std::cin;
 using std::ifstream;
@@ -32,50 +33,87 @@ void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
     deck[PITFALL] = std::unique_ptr<Card>(new Pitfall());
     deck[MERCHANT] = std::unique_ptr<Card>(new Merchant());
     deck[BARFIGHT] = std::unique_ptr<Card>(new Barfight());
+    deck[GANG] = std::unique_ptr<Card>(new Gang());
 }
+
+void Mtmchkin::initBattleDeckMap(std::map<string, std::unique_ptr<Card>> &deck) {
+    deck[GOBLIN] = std::unique_ptr<Card>(new Goblin());
+    deck[DRAGON] = std::unique_ptr<Card>(new Dragon());
+    deck[VAMPIRE] = std::unique_ptr<Card>(new Vampire());
+}
+
 void Mtmchkin::insertCard(const string cardName,int curr_row)
 {
     std::map<string, std::unique_ptr<Card>> deck;
-    initDeckMap(deck);
+    initBattleDeckMap(deck);
     if (deck.find(cardName) == deck.end())
     {
         throw DeckFileFormatError(curr_row);
+    }
+    else if(cardName == GANG){
+
     }
     else
     {
         m_cards.push(std::move(deck[cardName]));
     }
 }
+
+void Mtmchkin::initGang(const std::vector<std::string> gang, int& curr_row){
+    std::map<string, std::unique_ptr<Card>> deck;
+    initDeckMap(deck);
+    for(int i = 0; i< gang.size(); i++){
+        curr_row++;
+        if(deck.find(gang[i]) == deck.end()){
+            throw DeckFileFormatError(curr_row);
+        } else {
+            // deck[];
+        }
+    }
+}
+
 Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
 {
-    // std::cout << "the namber is1" << m_cards.size() << std::endl;
     printStartGameMessage();
     ifstream file;
     int curr_row = START_ROW;
-    // std::cout << "the namber is2" << m_cards.size() << std::endl;
     file.open(fileName);
     if (file.fail())
     {
         throw DeckFileNotFound();
     }
-    //  std::cout << "the namber is3" << m_cards.size() << std::endl;
     string cardName = "";
     while (!file.eof())
     {
         std::getline(file, cardName);
         if (cardName != "")
         {
+            if(cardName == GANG){
+                //check if deletes when exists if
+                std::vector<std::string> gang;
+                while(cardName != ENDGANG && !file.eof()){
+                    std::getline(file,cardName);
+                    gang.push_back(cardName);
+                }
+                if(file.eof()){
+                    //check if we need to throw the current row or the row of the gang declatrion
+                    throw DeckFileFormatError(curr_row);
+                } else {
+                    initGang(gang, curr_row);
+                }
+            } else {
             insertCard(cardName, curr_row);
             curr_row++;
+            }
         }
     }
-    // std::cout << "the namber is4" << m_cards.size() << std::endl;
     validateEnoughCards();
     initActivePlayers();
     getInputTeamSize();
     initLeaderBoard(m_leadboard);
     getInputPlayers();
 }
+
 void Mtmchkin::initLeaderBoard(std::vector<std::unique_ptr<Player>> &leaderBoard)
 {
     for (int i = 0; i < m_teamSize; i++)

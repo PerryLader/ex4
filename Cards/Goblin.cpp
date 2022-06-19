@@ -4,7 +4,11 @@ using std::string;
 
 Goblin::Goblin():
  BattleCard(GOBLIN)
-{}
+{
+    m_force = GOBLIN_FORCE;
+    m_hp = GOBLIN_HP;
+    m_loot = GOBLIN_LOOT;
+}
 
  void Goblin::applyEncounter(Player &player) const 
  {
@@ -21,4 +25,10 @@ Goblin::Goblin():
         printLossBattle(player.getName(),GOBLIN);
 
     }
+}
+
+
+void Goblin::applyLostEncounter(Player &player) const {
+        player.damage(GOBLIN_HP);
+        printLossBattle(player.getName(),DRAGON);
 }

@@ -18,7 +18,7 @@ public:
      * @return
      *      A new instance of Card.
      */
-    Gang(const std::vector<std::unique_ptr<BattleCard>> gangCards);
+    Gang();
 
     /*
      * Handling the player's applyEncounter with the card:
