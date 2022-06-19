@@ -1,7 +1,7 @@
 #include "Rogue.h"
 using std::string;
 
-Rogue::Rogue(const string playerName) : Player(playerName) {}
+Rogue::Rogue(const std::string playerName) : Player(playerName) {}
 
 void Rogue::addCoins(const int coinsSize)
 {

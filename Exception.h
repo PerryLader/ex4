@@ -1,8 +1,9 @@
-#include "iostream"
-#include <exception>
 
 #ifndef EXCEPTION_H_
 #define EXCEPTION_H_
+
+#include "iostream"
+#include <exception>
 
 class DeckFileNotFound : public std::exception
 {

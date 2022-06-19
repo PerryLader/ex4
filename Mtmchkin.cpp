@@ -112,7 +112,7 @@ void Mtmchkin::printLeaderBoard() const
 
 int Mtmchkin::getNumberOfRounds() const
 {
-    return m_roundCount;
+    return m_roundCount - 1;
 }
 
 void Mtmchkin::initActivePlayers()
@@ -267,10 +267,10 @@ void Mtmchkin::getInputPlayers()
             job = UNDEFINED;
         }
         bool illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
-       
+
         while (illegal)
         {
-            printInsertPlayerMessage();
+
             std::getline(cin, input);
             pos = input.find(" ");
             name = input.substr(0, pos);
@@ -283,7 +283,6 @@ void Mtmchkin::getInputPlayers()
                 job = UNDEFINED;
             }
             illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
-          
         }
         if (job == ROGUE)
         {
