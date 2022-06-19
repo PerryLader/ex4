@@ -48,6 +48,10 @@ public:
     BattleCard(const BattleCard &) = default;
     virtual ~BattleCard() = default;
     BattleCard &operator=(const BattleCard &other) = default;
+    protected: 
+    int m_force;
+    int m_hp;
+    int m_loot;
 };
 
 #endif

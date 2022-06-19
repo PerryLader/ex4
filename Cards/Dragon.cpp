@@ -5,7 +5,11 @@ using std::string;
 
 Dragon::Dragon():
  BattleCard(DRAGON)
-{}
+{
+    m_force = DRAGON_FORCE;
+    m_hp = DRAGON_HP;
+    m_loot = DRAGON_LOOT;
+}
 
  void Dragon::applyEncounter(Player &player) const 
  {
