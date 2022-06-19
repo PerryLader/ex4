@@ -22,5 +22,5 @@ void BattleCard::printCard() const
         printMonsterDetails(std::cout, VAMPIRE_FORCE, VAMPIRE_HP, VAMPIRE_LOOT, false);
     }
 
-//     printEndOfCardDetails(std::cout);
-// }
+    printEndOfCardDetails(std::cout);
+}

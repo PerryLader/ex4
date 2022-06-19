@@ -46,11 +46,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
      */
     BattleCard(const BattleCard &) = default;
-<<<<<<< HEAD
-    virtual ~BattleCard()=0;
-=======
     virtual ~BattleCard() = default;
->>>>>>> de8a0ac3cf13b31da0e0c24e45afb68873904f39
     BattleCard &operator=(const BattleCard &other) = default;
 };
 
