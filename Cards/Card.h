@@ -16,6 +16,7 @@ const std::string FAIRY="Fairy";
 const std::string MERCHANT="Merchant";
 const std::string PITFALL="Pitfall";
 const std::string TREASURE="Treasure";
+const std::string GANG="Gang";
 const int DONT_BUY=0;
 const int BUY_HEAL=1;
 const int BUY_FORCE=2;

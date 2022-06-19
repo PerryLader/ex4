@@ -33,7 +33,7 @@ void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
     deck[MERCHANT] = std::unique_ptr<Card>(new Merchant());
     deck[BARFIGHT] = std::unique_ptr<Card>(new Barfight());
 }
-void Mtmchkin::insertCard(const string cardName, const int curr_row)
+void Mtmchkin::insertCard(const string cardName,int curr_row)
 {
     std::map<string, std::unique_ptr<Card>> deck;
     initDeckMap(deck);
@@ -286,7 +286,6 @@ void Mtmchkin::getInputPlayers()
         }
         if (job == ROGUE)
         {
-
             m_players.push_back(std::unique_ptr<Player>(new Rogue(name)));
         }
         if (job == WIZARD)

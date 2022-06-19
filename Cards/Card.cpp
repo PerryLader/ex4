@@ -2,6 +2,7 @@
 
 Card::Card(const std::string name):m_name(name)
 {}
+
  void Card::printCard() const
 {
     printCardDetails(std::cout,m_name);
