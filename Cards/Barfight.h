@@ -1,6 +1,9 @@
 #ifndef BARFIGHT_H
 #define BARFIGHT_H
 #include "Card.h"
+#include "../Players/Player.h"
+#include "../Players/Fighter.h"
+
 
 class Barfight : public Card
 {
@@ -32,7 +35,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
      */
     Barfight(const Barfight &) = default;
-    ~Barfight() override;
+    ~Barfight() = default;
     Barfight &operator=(const Barfight &other) = default;
 };
 

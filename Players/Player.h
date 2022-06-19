@@ -17,26 +17,27 @@ public:
     // constractors
     Player()=delete ;
     Player(const std::string playerName);
-    Player(const Player &player);
+    Player(const Player &player) = default;
 
     // distractor
-    virtual ~Player();
+    virtual ~Player() = default;
 
     // oprators
-    Player &operator=(const Player &player);
+    Player &operator=(const Player &player) = default;
 
     // methods
     virtual void printInfo(std::ostream& os) const = 0;
+    virtual void heal(const int healSize);
+    virtual int getAttackStrength();
+    virtual void addCoins(const int coinsSize);
+
     void levelUp();
     void debuff(const int debuffSize);
-    virtual void heal(const int healSize);
     void damage(const int dmgSize);
-    virtual int getAttackStrength();
     int getLevel();
     int getCurrHp();
     std::string getName();
     int getMoney();
-    virtual void addCoins(const int coinsSize);
     void buff(const int buffSize);
     bool isKnockedOut();
     bool isWinner();

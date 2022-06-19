@@ -47,8 +47,7 @@ public:
      * @return
      *      void
     */
-    virtual void applyEncounter(Player& player) const=0;
-    virtual void printCard(const Card& card) const;
+    virtual void applyEncounter(Player& player) const = 0;
 
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
@@ -61,10 +60,11 @@ public:
     */
     friend std::ostream& operator << (std::ostream& os, const Card& card);
     Card(const Card&) = default;
-    virtual ~Card()=0;
+    virtual ~Card() =default;
     Card& operator=(const Card& other) = default;
 
 protected:
+virtual void printCard() const;
 const std::string m_name;
 };
 

@@ -1,6 +1,9 @@
 #ifndef Treasure_H
 #define Treasure_H
 #include "Card.h"
+#include "../Players/Player.h"
+
+
 const int value=10;
 class Treasure:public Card {
 public:
@@ -32,7 +35,7 @@ public:
      * Here we are explicitly telling the compiler to use the default methods
     */
     Treasure(const Treasure&) = default;
-    ~Treasure() override;
+    ~Treasure() = default;
     Treasure& operator=(const Treasure& other) = default;
 };
 

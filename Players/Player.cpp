@@ -13,29 +13,6 @@ Player::Player(const string playerName) : m_name(playerName),
 {
 }
 
-Player::Player(const Player &player) : m_name(player.m_name),
-                                       m_level(player.m_level),
-                                       m_force(player.m_force),
-                                       m_maxHp(player.m_maxHp),
-                                       m_curHp(player.m_curHp),
-                                       m_coins(player.m_coins)
-{
-}
-// oprators
-Player &Player::operator=(const Player &player)
-{
-    if (this == &player)
-        return *this;
-    this->m_name = player.m_name;
-    this->m_level = player.m_level;
-    this->m_force = player.m_force;
-    this->m_maxHp = player.m_maxHp;
-    this->m_curHp = this->m_maxHp;
-    this->m_coins = player.m_coins;
-    return *this;
-}
-// methods
-
 ostream &operator<<(ostream &os, const Player &player)
 {
     player.printInfo(os);
