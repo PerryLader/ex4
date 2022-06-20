@@ -69,6 +69,8 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
             curr_row++;
         }
     }
+    std::unique_ptr<BattleCard> a;
+    
     // std::cout << "the namber is4" << m_cards.size() << std::endl;
     validateEnoughCards();
     initActivePlayers();
