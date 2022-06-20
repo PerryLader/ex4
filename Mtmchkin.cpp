@@ -118,12 +118,6 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
             }
         }
     }
-<<<<<<< HEAD
-    std::unique_ptr<BattleCard> a;
-    
-    // std::cout << "the namber is4" << m_cards.size() << std::endl;
-=======
->>>>>>> 1d528c50e2cf6e8e08c27d0847a3a4d50962e39d
     validateEnoughCards();
     initActivePlayers();
     getInputTeamSize();
