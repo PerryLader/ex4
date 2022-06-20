@@ -42,7 +42,7 @@ public:
      */
     BattleCard() = delete;
     virtual bool applyGangEncounter(Player &player) const;
-    virtual void applyLostEncounter(Player &player) const;
+    virtual void applyLostEncounter(Player &player) const = 0;
     /*
      * Here we are explicitly telling the compiler to use the default methods
      */

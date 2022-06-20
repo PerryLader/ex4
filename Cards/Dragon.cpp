@@ -35,7 +35,6 @@ bool Dragon::applyGangEncounter(Player &player) const
     if (player.getAttackStrength() >= DRAGON_FORCE)
     {
         player.addCoins(DRAGON_LOOT);
-        printWinBattle(player.getName(), DRAGON);
         return false;
     }
     else
