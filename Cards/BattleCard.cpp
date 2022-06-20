@@ -6,21 +6,32 @@
 BattleCard::BattleCard(const std::string name) : Card(name)
 {
 }
+
 void BattleCard::printCard() const
 {
     printCardDetails(std::cout, m_name);
     if (m_name == DRAGON)
     {
-        printMonsterDetails(std::cout, DRAGON_FORCE, DRAGON_HP, DRAGON_LOOT, true);
+        printMonsterDetails(std::cout, m_force, m_hp, m_loot, true);
     }
-    if (m_name == GOBLIN)
+    else
     {
-        printMonsterDetails(std::cout, GOBLIN_FORCE, GOBLIN_HP, GOBLIN_LOOT, false);
+        printMonsterDetails(std::cout, m_force, m_hp, m_loot, false);
     }
-    if (m_name == VAMPIRE)
-    {
-        printMonsterDetails(std::cout, VAMPIRE_FORCE, VAMPIRE_HP, VAMPIRE_LOOT, false);
-    }
-
     printEndOfCardDetails(std::cout);
+}
+
+bool BattleCard::applyGangEncounter(Player &player) const
+{
+    if (player.getAttackStrength() >= m_force)
+    {
+        player.addCoins(m_loot);
+        return false;
+    }
+    else
+    {
+        player.damage(m_hp);
+        printLossBattle(player.getName(), m_name);
+        return true;
+    }
 }

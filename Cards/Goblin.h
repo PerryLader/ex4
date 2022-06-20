@@ -23,7 +23,7 @@ public:
      *      void
     */
     void applyEncounter(Player& player) const override;
-
+    void applyLostEncounter(Player& player) const override;
     /*
      * C'tor to the "default card" - Treasure card that gives 0 coins
     */

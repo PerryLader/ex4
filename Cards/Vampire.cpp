@@ -4,6 +4,9 @@ using std::string;
 
 Vampire::Vampire() : BattleCard(VAMPIRE)
 {
+    m_force = VAMPIRE_FORCE;
+    m_hp = VAMPIRE_HP;
+    m_loot = VAMPIRE_LOOT;
 }
 
 void Vampire::applyEncounter(Player &player) const
@@ -19,5 +22,27 @@ void Vampire::applyEncounter(Player &player) const
         player.debuff(1);
         player.damage(VAMPIRE_HP);
         printLossBattle(player.getName(),VAMPIRE);
+    }
+}
+
+void Vampire::applyLostEncounter(Player & player) const {
+        player.debuff(1);
+        player.damage(VAMPIRE_HP);
+        printLossBattle(player.getName(),VAMPIRE);
+}
+
+bool Vampire::applyGangEncounter(Player &player) const
+{
+    if (player.getAttackStrength() >= VAMPIRE_FORCE)
+    {
+        player.addCoins(VAMPIRE_LOOT);
+        return false;
+    }
+    else
+    {
+        player.debuff(1);
+        player.damage(VAMPIRE_HP);
+        printLossBattle(player.getName(),VAMPIRE);
+        return true;
     }
 }

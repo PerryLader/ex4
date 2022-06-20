@@ -1,55 +1,53 @@
 #include "Gang.h"
 #include "../utilities.h"
+#include <iostream>
+#include "Goblin.h"
+#include "Dragon.h"
+#include "Vampire.h"
 
-Gang::Gang(const std::vector<std::unique_ptr<BattleCard>> gangCards) : Card(GANG), m_gangCards()
+Gang::Gang(std::vector<std::string> cards) : Card(GANG), m_gangCards()
 {
-    for (int i = 0; i < gangCards.size(); i++)
+    std::map<std::string, std::unique_ptr<BattleCard>> deck;
+    for (int i = 0; (unsigned int) i < cards.size(); i++)
     {
-        m_gangCards.push_back(std::move(gangCards[i]));
+        initBattleDeckMap(deck);
+        m_gangCards.push_back(std::move(deck[cards[i]]));
     }
 }
 
 void Gang::printCard() const
 {
     std::cout << "start Gang card" << std::endl;
-
-    for (int i = 0; i < m_gangCards.size(); i++)
+    for (int i = 0;(unsigned int) i < m_gangCards.size(); i++)
     {
         std::cout << "Gang member number: " << i << std::endl;
         m_gangCards[i]->printCard();
     }
     std::cout << "end Gang card" << std::endl;
 }
-
-void Gang::applyEncounter(Player &player) const
+void Gang::applyEncounter(Player& player) const
 {
-    int hp = player.getCurrHp();
     int counter = 0;
-    int totalForce = 0;
-    while (hp == player.getCurrHp() && counter < m_gangCards.size())
+    bool didLose = false;
+    while (!didLose && (unsigned int) counter < m_gangCards.size())
     {
-        hp = player.getCurrHp();
-        m_gangCards[counter]->applyEncounter(player);
+        didLose = m_gangCards[counter]->applyGangEncounter(player);
         counter++;
     }
-    if (counter == m_gangCards.size())
+    if (didLose == false)
     {
-        player.decLvl(counter - 1);
+        printWinBattle(player.getName(), GANG);
+        player.levelUp();
     }
-    while (counter < m_gangCards.size())
+    while ((unsigned int) counter < m_gangCards.size())
     {
-        if (m_name == DRAGON)
-        {
-            totalForce += player.getCurrHp();
-        }
-        if (m_name == GOBLIN)
-        {
-            totalForce += GOBLIN_HP;
-        }
-        if (m_name == VAMPIRE)
-        {
-            totalForce += VAMPIRE_HP;
-        }
+        m_gangCards[counter]->applyLostEncounter(player);
+        counter++;
     }
-    player.damage(totalForce);
+}
+void Gang::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck)
+{
+    deck[GOBLIN] = std::unique_ptr<BattleCard>(new Goblin());
+    deck[DRAGON] = std::unique_ptr<BattleCard>(new Dragon());
+    deck[VAMPIRE] = std::unique_ptr<BattleCard>(new Vampire());
 }

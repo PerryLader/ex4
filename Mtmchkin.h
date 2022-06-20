@@ -7,6 +7,7 @@
 #include "./Players/Rogue.h"
 #include "./Players/Wizard.h"
 #include "./Players/Fighter.h"
+#include "./Cards/BattleCard.h"
 #include <memory>
 #include <map>
 const std::string ROGUE = "Rogue";
@@ -30,6 +31,7 @@ int m_roundCount = 1;
 
 //helper methods
 void initDeckMap(std::map<std::string, std::unique_ptr<Card>>& deck);
+void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck);
 void getInputTeamSize();
 void getInputPlayers();
 void updateLeaderBoard();
@@ -39,6 +41,7 @@ void initActivePlayers();
 void insertCard(const std::string cardName, int curr_row);
 void validateEnoughCards();
 void initLeaderBoard( std::vector<std::unique_ptr<Player>>& leaderBoard);
+void insertGang(const std::vector<std::string> gang, int& curr_row);
 
 public:
     /*
