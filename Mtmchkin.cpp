@@ -18,7 +18,7 @@ using std::ifstream;
 using std::string;
 void Mtmchkin::validateEnoughCards()
 {
-    if (m_cards.size() < MIN_DECK_CARDS)
+    if (m_cards.size() < (unsigned int) MIN_DECK_CARDS)
     {
         throw DeckFileInvalidSize();
     }
@@ -33,25 +33,22 @@ void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
     deck[PITFALL] = std::unique_ptr<Card>(new Pitfall());
     deck[MERCHANT] = std::unique_ptr<Card>(new Merchant());
     deck[BARFIGHT] = std::unique_ptr<Card>(new Barfight());
-    deck[GANG] = std::unique_ptr<Card>(new Gang());
 }
 
-void Mtmchkin::initBattleDeckMap(std::map<string, std::unique_ptr<Card>> &deck) {
-    deck[GOBLIN] = std::unique_ptr<Card>(new Goblin());
-    deck[DRAGON] = std::unique_ptr<Card>(new Dragon());
-    deck[VAMPIRE] = std::unique_ptr<Card>(new Vampire());
+void Mtmchkin::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck)
+{
+    deck[GOBLIN] = std::unique_ptr<BattleCard>(new Goblin());
+    deck[DRAGON] = std::unique_ptr<BattleCard>(new Dragon());
+    deck[VAMPIRE] = std::unique_ptr<BattleCard>(new Vampire());
 }
 
-void Mtmchkin::insertCard(const string cardName,int curr_row)
+void Mtmchkin::insertCard(const string cardName, int curr_row)
 {
     std::map<string, std::unique_ptr<Card>> deck;
-    initBattleDeckMap(deck);
+    initDeckMap(deck);
     if (deck.find(cardName) == deck.end())
     {
         throw DeckFileFormatError(curr_row);
-    }
-    else if(cardName == GANG){
-
     }
     else
     {
@@ -59,21 +56,19 @@ void Mtmchkin::insertCard(const string cardName,int curr_row)
     }
 }
 
-void Mtmchkin::initGang(const std::vector<std::string> gang, int& curr_row){
-    std::map<string, std::unique_ptr<Card>> deck;
-    initDeckMap(deck);
-    for(int i = 0; i< gang.size(); i++){
-        curr_row++;
-        if(deck.find(gang[i]) == deck.end()){
-            throw DeckFileFormatError(curr_row);
-        } else {
-            // deck[];
-        }
-    }
+void Mtmchkin::insertGang(const std::vector<std::string> gang, int &curr_row)
+{
+    std::map<string, std::unique_ptr<BattleCard>> deck;
+    initBattleDeckMap(deck);
+    Gang *gangCards = new Gang(gang);
+    std::unique_ptr<Card> ptr(gangCards);
+    m_cards.push(std::move(ptr));
 }
 
 Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
 {
+    std::map<string, std::unique_ptr<BattleCard>> deck;
+    initBattleDeckMap(deck);
     printStartGameMessage();
     ifstream file;
     int curr_row = START_ROW;
@@ -88,22 +83,38 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
         std::getline(file, cardName);
         if (cardName != "")
         {
-            if(cardName == GANG){
-                //check if deletes when exists if
+            if (cardName == GANG)
+            {
+                // check if deletes when exists if
                 std::vector<std::string> gang;
-                while(cardName != ENDGANG && !file.eof()){
-                    std::getline(file,cardName);
-                    gang.push_back(cardName);
+                while (cardName != ENDGANG && !file.eof())
+                {
+                    std::getline(file, cardName);
+                    if (cardName != ENDGANG)
+                    {
+                        curr_row++;
+                        if (deck.find(cardName) == deck.end())
+                        {
+                            throw DeckFileFormatError(curr_row);
+                        }
+                        gang.push_back(cardName);
+                    }
                 }
-                if(file.eof()){
-                    //check if we need to throw the current row or the row of the gang declatrion
+                if (file.eof())
+                {
+                    // check if we need to throw the current row or the row of the gang declatrion
                     throw DeckFileFormatError(curr_row);
-                } else {
-                    initGang(gang, curr_row);
                 }
-            } else {
-            insertCard(cardName, curr_row);
-            curr_row++;
+                else
+                {
+                    insertGang(gang, curr_row);
+                }
+            }
+            else
+            {
+                insertCard(cardName, curr_row);
+                // std::cout << "________got insert_______ " << cardName << std::endl;
+                curr_row++;
             }
         }
     }
@@ -159,10 +170,6 @@ void Mtmchkin::initActivePlayers()
     {
         m_activePlayers.push_back(false);
     }
-    // for (int i = 0; i < m_teamSize; i++)
-    // {
-    //     m_players.push_back(std::unique_ptr<Player>(new Wizard("perry")));
-    // }
 }
 
 void Mtmchkin::playRound()

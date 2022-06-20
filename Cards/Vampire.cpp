@@ -36,7 +36,6 @@ bool Vampire::applyGangEncounter(Player &player) const
     if (player.getAttackStrength() >= VAMPIRE_FORCE)
     {
         player.addCoins(VAMPIRE_LOOT);
-        printWinBattle(player.getName(),VAMPIRE);
         return false;
     }
     else
