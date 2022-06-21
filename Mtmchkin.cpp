@@ -18,7 +18,7 @@ using std::ifstream;
 using std::string;
 void Mtmchkin::validateEnoughCards()
 {
-    if (m_cards.size() < (unsigned int) MIN_DECK_CARDS)
+    if (m_cards.size() < (unsigned int)MIN_DECK_CARDS)
     {
         throw DeckFileInvalidSize();
     }
@@ -249,6 +249,7 @@ void Mtmchkin::getInputTeamSize()
     while (choosen.length() != 1 || choosen[0] < 50 || choosen[0] > 54)
     {
         printInvalidTeamSize();
+        printEnterTeamSizeMessage();
         std::getline(cin, choosen);
     }
     try
@@ -299,26 +300,19 @@ void Mtmchkin::getInputPlayers()
         string input;
         printInsertPlayerMessage();
         std::getline(cin, input);
-
-        int pos = input.find(" ");
-        string name = input.substr(0, pos);
+        string name;
         string job;
-        if ((unsigned int)pos < input.length())
+        bool illegal=true;
+        bool nameLegal=false;
+        int pos = input.find(" ");
+        if ((unsigned int)pos == std::string::npos || (unsigned int)pos == input.length())
         {
-            job = input.substr(pos + 1, input.length());
+            printInvalidName();
         }
         else
         {
-            job = UNDEFINED;
-        }
-        bool illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
-
-        while (illegal)
-        {
-
-            std::getline(cin, input);
-            pos = input.find(" ");
             name = input.substr(0, pos);
+
             if ((unsigned int)pos < input.length())
             {
                 job = input.substr(pos + 1, input.length());
@@ -327,7 +321,40 @@ void Mtmchkin::getInputPlayers()
             {
                 job = UNDEFINED;
             }
-            illegal = !checkIfNameIsLegal(name) || !checkClassIsLegal(job);
+
+            nameLegal = checkIfNameIsLegal(name);
+            if (nameLegal)
+            {
+                illegal = !nameLegal || !checkClassIsLegal(job);
+            }
+        }
+
+        while (illegal)
+        {
+
+            std::getline(cin, input);
+            pos = input.find(" ");
+            if ((unsigned int) pos == std::string::npos &&(unsigned int) pos == input.length())
+            {
+                printInvalidName();
+            }
+            else
+            {
+                name = input.substr(0, pos);
+                if ((unsigned int)pos < input.length())
+                {
+                    job = input.substr(pos + 1, input.length());
+                }
+                else
+                {
+                    job = UNDEFINED;
+                }
+                nameLegal = checkIfNameIsLegal(name);
+                if (nameLegal)
+                {
+                    illegal = !nameLegal || !checkClassIsLegal(job);
+                }
+            }
         }
         if (job == ROGUE)
         {
