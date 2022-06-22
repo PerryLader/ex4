@@ -9,7 +9,7 @@ class Fighter : public Player {
     Fighter(const std::string playerName);
     ~Fighter() = default;
     Fighter(const Fighter&) = default;
-    int getAttackStrength() override;
+    int getAttackStrength() const override;
     void printInfo(std::ostream& os) const override;
 };
 

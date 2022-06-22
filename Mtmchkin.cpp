@@ -16,14 +16,14 @@
 using std::cin;
 using std::ifstream;
 using std::string;
-void Mtmchkin::validateEnoughCards()
+void Mtmchkin::validateEnoughCards() const
 {
     if (m_cards.size() < (unsigned int)MIN_DECK_CARDS)
     {
         throw DeckFileInvalidSize();
     }
 }
-void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
+void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck) const
 {
     deck[GOBLIN] = std::unique_ptr<Card>(new Goblin());
     deck[FAIRY] = std::unique_ptr<Card>(new Fairy());
@@ -35,11 +35,18 @@ void Mtmchkin::initDeckMap(std::map<string, std::unique_ptr<Card>> &deck)
     deck[BARFIGHT] = std::unique_ptr<Card>(new Barfight());
 }
 
-void Mtmchkin::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck)
+void Mtmchkin::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck) const
 {
     deck[GOBLIN] = std::unique_ptr<BattleCard>(new Goblin());
     deck[DRAGON] = std::unique_ptr<BattleCard>(new Dragon());
     deck[VAMPIRE] = std::unique_ptr<BattleCard>(new Vampire());
+}
+
+void Mtmchkin::initPlayersMap(std::map<std::string, std::unique_ptr<Player>> &map, std::string name) const
+{
+    map[ROGUE] = std::unique_ptr<Player>(new Rogue(name));
+    map[WIZARD] = std::unique_ptr<Player>(new Wizard(name));
+    map[FIGHTER] = std::unique_ptr<Player>(new Fighter(name));
 }
 
 void Mtmchkin::insertCard(const string cardName, int curr_row)
@@ -85,7 +92,6 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
         {
             if (cardName == GANG)
             {
-                // check if deletes when exists if
                 std::vector<std::string> gang;
                 while (cardName != ENDGANG && !file.eof())
                 {
@@ -102,7 +108,6 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
                 }
                 if (file.eof())
                 {
-                    // check if we need to throw the current row or the row of the gang declatrion
                     throw DeckFileFormatError(curr_row);
                 }
                 else
@@ -113,7 +118,6 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
             else
             {
                 insertCard(cardName, curr_row);
-                // std::cout << "________got insert_______ " << cardName << std::endl;
                 curr_row++;
             }
         }
@@ -132,9 +136,9 @@ void Mtmchkin::initLeaderBoard(std::vector<std::unique_ptr<Player>> &leaderBoard
         leaderBoard.push_back(nullptr);
     }
 }
+
 void Mtmchkin::printLeaderBoard() const
 {
-    // void printPlayerLeaderBoard(int ranking, const Player &player);
     int rank = 0;
     printLeaderBoardStartMessage();
     for (int i = 0; (unsigned int)i < m_leadboard.size(); i++)
@@ -262,11 +266,10 @@ void Mtmchkin::getInputTeamSize()
     }
 }
 
-bool Mtmchkin::checkIfNameIsLegal(const string &name)
+bool Mtmchkin::checkIfNameIsLegal(const string &name) const
 {
     if (name.length() > 15)
     {
-        printInvalidName();
         return false;
     }
     int currChar;
@@ -275,99 +278,68 @@ bool Mtmchkin::checkIfNameIsLegal(const string &name)
         currChar = int(i);
         if ((currChar > 122) || (currChar < 97 && currChar > 90) || (currChar < 65))
         {
-            printInvalidName();
             return false;
         }
     }
     return true;
 }
 
-bool Mtmchkin::checkClassIsLegal(const string &job)
-{
-    if (!(job == ROGUE || job == WIZARD || job == FIGHTER))
-    {
-        printInvalidClass();
-        return false;
-    }
-    return true;
-}
 // fix all get line problems
+bool Mtmchkin::checkPlayersInput(std::string input, std::map<std::string, std::unique_ptr<Player>> &map,
+                                 std::string &job, std::string &name) const
+{
+    int pos = input.find(" ");
+    if ((unsigned int)pos == std::string::npos || (unsigned int)pos + 1 == input.length())
+    {
+        printInvalidName();
+        return true;
+    }
+    else
+    {
+        name = input.substr(0, pos);
+        if ((unsigned int)pos < input.length())
+        {
+            job = input.substr(pos + 1, input.length());
+        }
+        else
+        {
+            job = UNDEFINED;
+        }
+        if (checkIfNameIsLegal(name))
+        {
+            initPlayersMap(map, name);
+            if (map.find(job) == map.end())
+            {
+                printInvalidClass();
+                return true;
+            }
+        }
+        else
+        {
+            printInvalidName();
+            return true;
+        }
+    }
+    return false;
+}
 
 void Mtmchkin::getInputPlayers()
 {
     for (int i = 0; i < m_teamSize; i++)
     {
+        std::map<std::string, std::unique_ptr<Player>> map;
         string input;
         printInsertPlayerMessage();
         std::getline(cin, input);
         string name;
         string job;
-        bool illegal=true;
-        bool nameLegal=false;
-        int pos = input.find(" ");
-        if ((unsigned int)pos == std::string::npos || (unsigned int)pos == input.length())
-        {
-            printInvalidName();
-        }
-        else
-        {
-            name = input.substr(0, pos);
-
-            if ((unsigned int)pos < input.length())
-            {
-                job = input.substr(pos + 1, input.length());
-            }
-            else
-            {
-                job = UNDEFINED;
-            }
-
-            nameLegal = checkIfNameIsLegal(name);
-            if (nameLegal)
-            {
-                illegal = !nameLegal || !checkClassIsLegal(job);
-            }
-        }
-
+        bool illegal = checkPlayersInput(input, map, job, name);
         while (illegal)
         {
             std::getline(cin, input);
-            pos = input.find(" ");
-            if ((unsigned int) pos == std::string::npos &&(unsigned int) pos == input.length())
-            {
-                printInvalidName();
-            }
-            else
-            {
-                name = input.substr(0, pos);
-                if ((unsigned int)pos < input.length())
-                {
-                    job = input.substr(pos + 1, input.length());
-                }
-                else
-                {
-                    job = UNDEFINED;
-                }
-                nameLegal = checkIfNameIsLegal(name);
-                if (nameLegal)
-                {
-                    illegal = !nameLegal || !checkClassIsLegal(job);
-                }
-            }
+            illegal = checkPlayersInput(input, map, job, name);
         }
-        if (job == ROGUE)
-        {
-            m_players.push_back(std::unique_ptr<Player>(new Rogue(name)));
-        }
-        if (job == WIZARD)
-        {
-
-            m_players.push_back(std::unique_ptr<Player>(new Wizard(name)));
-        }
-        if (job == FIGHTER)
-        {
-            m_players.push_back(std::unique_ptr<Player>(new Fighter(name)));
-        }
+        m_players.push_back(std::move(map[job]));
         m_activePlayers[i] = true;
     }
 }

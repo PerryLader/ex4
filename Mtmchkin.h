@@ -30,18 +30,19 @@ int m_teamSize;
 int m_roundCount = 1;
 
 //helper methods
-void initDeckMap(std::map<std::string, std::unique_ptr<Card>>& deck);
-void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck);
+void initDeckMap(std::map<std::string, std::unique_ptr<Card>>& deck) const;
+void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck) const;
 void getInputTeamSize();
 void getInputPlayers();
 void updateLeaderBoard();
-bool checkClassIsLegal(const std::string& job);
-bool checkIfNameIsLegal(const std::string& name);
+bool checkIfNameIsLegal(const std::string& name) const;
 void initActivePlayers();
 void insertCard(const std::string cardName, int curr_row);
-void validateEnoughCards();
+void validateEnoughCards() const;
 void initLeaderBoard( std::vector<std::unique_ptr<Player>>& leaderBoard);
 void insertGang(const std::vector<std::string> gang, int& curr_row);
+bool checkPlayersInput(std::string input, std::map<std::string, std::unique_ptr<Player>>& map, std::string& name, std::string& job) const;
+void initPlayersMap(std::map<std::string, std::unique_ptr<Player>>& map, std::string name) const;
 
 public:
     /*

@@ -38,7 +38,7 @@ public:
     /*
      * Here we are explicitly telling the compiler to use the default methods
      */
-    void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck);
+    void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck) const;
     void printCard() const override;
     Gang(const Gang &) = default;
     ~Gang() = default;
