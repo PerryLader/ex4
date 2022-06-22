@@ -26,34 +26,34 @@ void Player::levelUp()
         m_level++;
     }
 }
-int Player::getLevel()
+int Player::getLevel() const
 {
     return m_level;
 }
-int Player::getAttackStrength()
+int Player::getAttackStrength() const
 {
     int strength = m_level + m_force;
     return strength;
 }
-int Player::getCurrHp()
+int Player::getCurrHp() const
 {
     return m_curHp;
 }
-string Player::getName()
+string Player::getName() const
 {
     return m_name;
 }
-int Player::getMoney()
+int Player::getMoney() const
 {
     return m_coins;
 }
-bool Player::isKnockedOut()
+bool Player::isKnockedOut() const
 {
 
     return (m_curHp <= 0);
 }
 
-bool Player::isWinner()
+bool Player::isWinner() const
 {
     return (m_level == MAX_LVL);
 }

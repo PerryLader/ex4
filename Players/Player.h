@@ -28,19 +28,19 @@ public:
     // methods
     virtual void printInfo(std::ostream& os) const = 0;
     virtual void heal(const int healSize);
-    virtual int getAttackStrength();
+    virtual int getAttackStrength() const;
     virtual void addCoins(const int coinsSize);
 
     void levelUp();
     void debuff(const int debuffSize);
     void damage(const int dmgSize);
-    int getLevel();
-    int getCurrHp();
-    std::string getName();
-    int getMoney();
+    int getLevel() const;
+    int getCurrHp() const;
+    std::string getName() const;
+    int getMoney() const;
     void buff(const int buffSize);
-    bool isKnockedOut();
-    bool isWinner();
+    bool isKnockedOut() const;
+    bool isWinner() const;
     bool pay(const int coinsSize);
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
     protected:
