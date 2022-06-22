@@ -331,7 +331,6 @@ void Mtmchkin::getInputPlayers()
 
         while (illegal)
         {
-
             std::getline(cin, input);
             pos = input.find(" ");
             if ((unsigned int) pos == std::string::npos &&(unsigned int) pos == input.length())
