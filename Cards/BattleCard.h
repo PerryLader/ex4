@@ -21,10 +21,7 @@ public:
     /*
      * C'tor of Card class
      *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
-     * @return
-     *      A new instance of Card.
+     * @param name - The type/name of the card.
      */
      BattleCard(const std::string name);
 
@@ -36,12 +33,32 @@ public:
      *      void
      */
     virtual void applyEncounter(Player &player) const = 0;
+    /*
+     * function that prints a battle card to cout
+     */
     void printCard() const override;
     /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
+     * function that prints a battle card to cout
      */
     BattleCard() = delete;
+    /*
+     * Handling the player's applyGangEncounter with the card:
+     *
+     * @param player - The player.
+     * @return
+     *      bool
+     * return true if player won all battles agains the monsters in the gang card
+     * doesnt level up player who wins
+     */
     virtual bool applyGangEncounter(Player &player) const;
+    /*
+     * Handling the player's applyLostEncounter with the card:
+     *
+     * @param player - The player.
+     * @return
+     *      void
+     * player loses automaticly
+     */
     virtual void applyLostEncounter(Player &player) const = 0;
     /*
      * Here we are explicitly telling the compiler to use the default methods

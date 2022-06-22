@@ -200,16 +200,14 @@ void Mtmchkin::playRound()
 }
 bool Mtmchkin::isGameOver() const
 {
-    // td::cout<<"we are almost finish"<<std::endl;
     for (int i = 0; i < MAX_PLAYER; i++)
     {
         if (m_activePlayers[i])
         {
-            // std::cout<<"we are not  finish"<<std::endl;
+            
             return false;
         }
     }
-    // std::cout<<"we are finish"<<std::endl;
     return true;
 }
 void Mtmchkin::updateLeaderBoard()
@@ -243,7 +241,6 @@ void Mtmchkin::updateLeaderBoard()
         }
     }
 }
-// dosent know how to handle cases that start with an int and end with char like "3a"
 void Mtmchkin::getInputTeamSize()
 {
 
@@ -284,7 +281,6 @@ bool Mtmchkin::checkIfNameIsLegal(const string &name) const
     return true;
 }
 
-// fix all get line problems
 bool Mtmchkin::checkPlayersInput(std::string input, std::map<std::string, std::unique_ptr<Player>> &map,
                                  std::string &job, std::string &name) const
 {

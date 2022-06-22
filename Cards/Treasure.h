@@ -8,12 +8,7 @@ const int value=10;
 class Treasure:public Card {
 public:
     /*
-     * C'tor of Card class
-     *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
-     * @return
-     *      A new instance of Card.
+     * C'tor of Treasure class
     */
     Treasure();
     
@@ -26,9 +21,6 @@ public:
     */
     void applyEncounter(Player& player) const override;
 
-    /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-    */
 
 
     /*

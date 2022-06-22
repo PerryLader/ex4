@@ -7,12 +7,7 @@
 class Vampire:public BattleCard {
 public:
     /*
-     * C'tor of Card class
-     *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
-     * @return
-     *      A new instance of Card.
+     * C'tor of Vampire class
     */
     Vampire();
     
@@ -24,11 +19,25 @@ public:
      *      void
     */
     void applyEncounter(Player& player) const override;
-    void applyLostEncounter(Player& player) const override;
-    bool applyGangEncounter(Player & player) const override;
     /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-    */
+     * Handling the player's applyLostEncounter with the card:
+     *
+     * @param player - The player.
+     * @return
+     *      void
+     * player loses automaticly
+     */
+    void applyLostEncounter(Player& player) const override;
+    /*
+     * Handling the player's applyGangEncounter with the card:
+     *
+     * @param player - The player.
+     * @return
+     *      bool
+     * return true if player won all battles agains the monsters in the gang card
+     * doesnt level up player who wins
+     */
+    bool applyGangEncounter(Player & player) const override;
 
     /*
      * Here we are explicitly telling the compiler to use the default methods

@@ -15,10 +15,7 @@ public:
     /*
      * C'tor of Card class
      *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
-     * @return
-     *      A new instance of Card.
+     * @param cards - a vector that constains the name of all monsters that should be in the gang
      */
     Gang(std::vector<std::string> cards);
 
@@ -31,14 +28,13 @@ public:
      */
     void applyEncounter(Player& player) const override;
 
-    /*
-     * C'tor to the "default card" - Treasure card that gives 0 coins
-     */
+    
 
     /*
-     * Here we are explicitly telling the compiler to use the default methods
+     * the function initialize map and creats all the neccery pairs
      */
     void initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck) const;
+    //print all monstres in the gang
     void printCard() const override;
     Gang(const Gang &) = default;
     ~Gang() = default;

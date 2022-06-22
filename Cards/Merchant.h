@@ -6,12 +6,7 @@
 class Merchant:public Card {
 public:
     /*
-     * C'tor of Card class
-     *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
-     * @return
-     *      A new instance of Card.
+     * C'tor of Merchant class
     */
     Merchant();
     

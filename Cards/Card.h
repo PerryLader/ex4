@@ -31,12 +31,12 @@ public:
     /*
      * C'tor of Card class
      *
-     * @param type - The type of the card.
-     * @param stats - The numeral stats of the card.
+     * @param name - The type of the card.
      * @return
      *      A new instance of Card.
     */
     Card(const std::string name);
+    
     const std::string getName()
     {
         return m_name;

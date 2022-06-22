@@ -16,6 +16,10 @@ class Player
 public:
     // constractors
     Player()=delete ;
+     /*
+     * C'tor of Player class
+     * @param playerName - The name of the type of the player.
+     */
     Player(const std::string playerName);
     Player(const Player &player) = default;
 
