@@ -122,18 +122,22 @@ Mtmchkin::Mtmchkin(const std::string fileName) : m_players()
             }
         }
     }
+    initOnStartup();
+}
+
+void Mtmchkin::initOnStartup() {
     validateEnoughCards();
     initActivePlayers();
     getInputTeamSize();
-    initLeaderBoard(m_leadboard);
+    initLeaderBoard();
     getInputPlayers();
 }
 
-void Mtmchkin::initLeaderBoard(std::vector<std::unique_ptr<Player>> &leaderBoard)
+void Mtmchkin::initLeaderBoard()
 {
     for (int i = 0; i < m_teamSize; i++)
     {
-        leaderBoard.push_back(nullptr);
+        m_leadboard.push_back(nullptr);
     }
 }
 

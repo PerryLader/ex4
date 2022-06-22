@@ -50,15 +50,17 @@ void insertCard(const std::string cardName, int curr_row);
 //throw a DeckFileInvalidSize exeption if there is less then 5 cards in m_cards
 void validateEnoughCards() const;
 //initilize m_leaderBoard vactor to contains 6 nullptr cells
-void initLeaderBoard( std::vector<std::unique_ptr<Player>>& leaderBoard);
+void initLeaderBoard();
 //the function insert a gang card to m_cards according to the vector gang.
 //if one of the card names was illigal,DeckFileFormatError exeption is thrown
 void insertGang(const std::vector<std::string> gang, int& curr_row);
 //the fucntion return true if the input of the player name and his job is ligall according to convention
 //if so, @para job gets the proper string and @para name gets the proper string 
-bool checkPlayersInput(std::string input, std::map<std::string, std::unique_ptr<Player>>& map, std::string& name, std::string& job) const;
+bool checkPlayersInput(std::string input, std::map<std::string, std::unique_ptr<Player>>& map,
+ std::string& name, std::string& job) const;
 //the function initilize map with pairs of string and unique_ptr of players with name @param name
 void initPlayersMap(std::map<std::string, std::unique_ptr<Player>>& map, std::string name) const;
+void initOnStartup();
 
 public:
     /*
@@ -79,7 +81,8 @@ public:
     void playRound();
     
     /*
-    * Prints the leaderBoard of the game at a given stage of the game - according to the instruction in the exercise document.
+    * Prints the leaderBoard of the game at a given stage of the game - according to the 
+    *instruction in the exercise document.
     *
     * @return
     *      void

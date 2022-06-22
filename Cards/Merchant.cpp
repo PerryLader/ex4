@@ -10,7 +10,6 @@ Merchant::Merchant() : Card(MERCHANT)
 
 void Merchant::applyEncounter(Player &player) const
 {
-    // need to be checked
     printMerchantInitialMessageForInteractiveEncounter(cout, player.getName(), player.getMoney());
 
     string choosen;
@@ -18,7 +17,6 @@ void Merchant::applyEncounter(Player &player) const
     while (choosen.length() != 1 || choosen[0] < 48 || choosen[0] > 50)
     {
         printInvalidInput();
-        // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::getline(cin, choosen);
     }
     int final;
