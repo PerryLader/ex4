@@ -45,7 +45,8 @@ void Gang::applyEncounter(Player& player) const
         counter++;
     }
 }
-void Gang::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck)
+
+void Gang::initBattleDeckMap(std::map<std::string, std::unique_ptr<BattleCard>> &deck) const
 {
     deck[GOBLIN] = std::unique_ptr<BattleCard>(new Goblin());
     deck[DRAGON] = std::unique_ptr<BattleCard>(new Dragon());

@@ -3,7 +3,7 @@ using std::string;
 
 Fighter::Fighter(const string playerName) : Player(playerName){}
 
-int Fighter::getAttackStrength()
+int Fighter::getAttackStrength() const
 {
     int strength = m_level + m_force * 2;
     return strength;
